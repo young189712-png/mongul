@@ -1,0 +1,9 @@
+{
+  "name": "몽글 - 감정 일기",
+  "short_name": "몽글",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#fffdfb",
+  "theme_color": "#fffdfb",
+  "lang": "ko"
+}
