@@ -1,0 +1,863 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>몽글</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap');
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:#fffaf7;
+  color:#514945;
+  font-family:'Gaegu',sans-serif;
+}
+button,input,textarea{font-family:inherit}
+button{border:0;background:none;color:inherit}
+
+#app{
+  width:100%;
+  max-width:430px;
+  min-height:100vh;
+  margin:auto;
+  background:#fffaf7;
+}
+
+header{
+  height:62px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+}
+
+.logo{
+  font-size:27px;
+  font-weight:700;
+}
+
+.topbtn{
+  width:42px;
+  height:42px;
+  font-size:25px;
+  cursor:pointer;
+}
+
+.screen{display:none;padding:8px 18px 30px}
+.screen.active{display:block}
+
+.month{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:8px 0 18px;
+}
+
+.month button{
+  font-size:32px;
+  width:45px;
+  cursor:pointer;
+}
+
+.year{
+  text-align:center;
+  font-size:16px;
+}
+
+.monthname{
+  text-align:center;
+  font-size:28px;
+  font-weight:700;
+}
+
+.week{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  text-align:center;
+  font-size:16px;
+  margin-bottom:7px;
+}
+
+.calendar{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:7px;
+}
+
+.day{
+  min-height:62px;
+  border-radius:16px;
+  padding:5px;
+  text-align:center;
+  background:#fff;
+  cursor:pointer;
+  font-size:17px;
+}
+
+.day.empty{
+  background:transparent;
+  cursor:default;
+}
+
+.day.today{
+  box-shadow:inset 0 0 0 2px #e8bdb1;
+}
+
+.sticker{
+  display:block;
+  font-size:21px;
+  margin-top:4px;
+}
+
+.fab{
+  position:fixed;
+  right:max(calc((100vw - 430px)/2 + 18px),18px);
+  bottom:25px;
+  width:58px;
+  height:58px;
+  border-radius:50%;
+  background:#efcfc5;
+  font-size:34px;
+  cursor:pointer;
+}
+
+.back{
+  font-size:32px;
+  cursor:pointer;
+  margin-bottom:12px;
+}
+
+h1{
+  font-size:29px;
+  line-height:1.25;
+}
+
+.moods{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.mood{
+  background:white;
+  border-radius:20px;
+  padding:18px 5px;
+  font-size:24px;
+  cursor:pointer;
+}
+
+.mood span{
+  display:block;
+  font-size:16px;
+  margin-top:6px;
+}
+
+textarea,input{
+  width:100%;
+  border:0;
+  outline:0;
+  background:white;
+  border-radius:18px;
+  padding:15px;
+  font-size:18px;
+  margin:8px 0;
+}
+
+textarea{
+  height:260px;
+  resize:none;
+}
+
+.primary{
+  width:100%;
+  padding:14px;
+  border-radius:18px;
+  background:#edc8bc;
+  font-size:20px;
+  cursor:pointer;
+  margin-top:10px;
+}
+
+.listitem{
+  background:white;
+  border-radius:18px;
+  padding:14px;
+  margin:9px 0;
+  cursor:pointer;
+  font-size:19px;
+}
+
+.date{
+  color:#9b8982;
+  font-size:15px;
+}
+
+.menuitem{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  margin:12px 0;
+  font-size:21px;
+  cursor:pointer;
+}
+
+.movie{
+  display:flex;
+  gap:13px;
+  background:white;
+  border-radius:18px;
+  padding:12px;
+  margin:10px 0;
+  cursor:pointer;
+}
+
+.poster{
+  width:75px;
+  height:105px;
+  border-radius:10px;
+  object-fit:cover;
+  background:#eee;
+}
+
+.movieinfo{
+  flex:1;
+  font-size:19px;
+}
+
+.small{
+  font-size:15px;
+  color:#988b86;
+}
+
+.stars{
+  font-size:22px;
+  cursor:pointer;
+  letter-spacing:3px;
+}
+
+.searchrow{
+  display:flex;
+  gap:7px;
+}
+
+.searchrow input{margin:0}
+
+.searchrow button{
+  width:65px;
+  border-radius:15px;
+  background:#edc8bc;
+  font-size:18px;
+}
+
+#searchResults{
+  margin-top:12px;
+}
+
+.detailbox{
+  background:white;
+  border-radius:20px;
+  padding:18px;
+  margin-top:10px;
+}
+
+.detailbox h2{
+  font-size:26px;
+  margin:5px 0 15px;
+}
+
+.detailbox p{
+  font-size:18px;
+  line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div id="app">
+
+<header>
+  <button class="topbtn" id="menuBtn">☰</button>
+  <div class="logo">몽글</div>
+  <button class="topbtn" id="homeBtn">⌂</button>
+</header>
+
+<!-- 달력 -->
+<section id="calendarScreen" class="screen active">
+
+  <div class="month">
+    <button id="prev">‹</button>
+
+    <div>
+      <div class="year" id="year"></div>
+      <div class="monthname" id="month"></div>
+    </div>
+
+    <button id="next">›</button>
+  </div>
+
+  <div class="week">
+    <div>일</div><div>월</div><div>화</div>
+    <div>수</div><div>목</div><div>금</div><div>토</div>
+  </div>
+
+  <div id="calendar" class="calendar"></div>
+
+  <button class="fab" id="addBtn">＋</button>
+
+</section>
+
+<!-- 메뉴 -->
+<section id="menuScreen" class="screen">
+  <button class="back" data-home>‹</button>
+  <h1>몽글 메뉴</h1>
+
+  <div class="menuitem" id="diaryListBtn">📖 일기 목록</div>
+  <div class="menuitem" id="movieListBtn">🎬 영화 목록</div>
+</section>
+
+<!-- 일기 목록 -->
+<section id="diaryScreen" class="screen">
+  <button class="back" data-home>‹</button>
+  <h1>일기 목록</h1>
+  <div id="diaryList"></div>
+</section>
+
+<!-- 감정 -->
+<section id="moodScreen" class="screen">
+  <button class="back" data-home>‹</button>
+
+  <div id="moodDate"></div>
+
+  <h1>오늘의 감정을<br>골라보세요</h1>
+
+  <div class="moods">
+    <button class="mood" data-mood="😊">😊<span>좋아요</span></button>
+    <button class="mood" data-mood="🥰">🥰<span>행복해요</span></button>
+    <button class="mood" data-mood="😌">😌<span>편안해요</span></button>
+    <button class="mood" data-mood="😢">😢<span>슬퍼요</span></button>
+    <button class="mood" data-mood="😡">😡<span>화나요</span></button>
+    <button class="mood" data-mood="😵">😵<span>힘들어요</span></button>
+  </div>
+</section>
+
+<!-- 일기 작성 -->
+<section id="writeScreen" class="screen">
+  <button class="back" data-home>‹</button>
+
+  <div id="writeDate"></div>
+  <div id="chosenMood" style="font-size:40px;margin:10px 0"></div>
+
+  <input id="titleInput" placeholder="오늘은 어떤 하루였나요?">
+
+  <textarea id="bodyInput"
+    placeholder="천천히 적어보세요.&#10;&#10;오늘 있었던 일, 생각, 고마웠던 순간까지..."></textarea>
+
+  <button class="primary" id="saveDiary">기록하기</button>
+</section>
+
+<!-- 일기 상세 -->
+<section id="detailScreen" class="screen">
+  <button class="back" data-home>‹</button>
+  <div id="detail"></div>
+</section>
+
+<!-- 영화 목록 -->
+<section id="movieScreen" class="screen">
+  <button class="back" data-home>‹</button>
+
+  <div style="display:flex;justify-content:space-between;align-items:center">
+    <h1>영화 목록</h1>
+    <button class="topbtn" id="movieAdd">＋</button>
+  </div>
+
+  <div id="movieList"></div>
+</section>
+
+<!-- 영화 검색 -->
+<section id="searchScreen" class="screen">
+  <button class="back" data-home>‹</button>
+
+  <h1>영화 찾기</h1>
+
+  <div class="searchrow">
+    <input id="movieSearch" placeholder="영화 제목을 입력하세요">
+    <button id="searchBtn">검색</button>
+  </div>
+
+  <div id="searchResults"></div>
+</section>
+
+<!-- 영화 기록 -->
+<section id="movieWriteScreen" class="screen">
+  <button class="back" data-home>‹</button>
+
+  <div id="selectedMovie"></div>
+
+  <h2>별점</h2>
+
+  <div class="stars" id="stars">
+    ☆☆☆☆☆
+  </div>
+
+  <input id="movieYear" placeholder="개봉년도">
+  <input id="movieDirector" placeholder="감독">
+  <input id="movieActors" placeholder="배우">
+
+  <input id="movieDate" type="date">
+  <input id="moviePlace" placeholder="어디서 봤나요?">
+  <input id="movieWho" placeholder="누구와 봤나요?">
+
+  <textarea id="movieReview"
+    placeholder="영화를 보고 난 뒤의 생각을 적어보세요."></textarea>
+
+  <button class="primary" id="saveMovie">영화 저장하기</button>
+</section>
+
+</div>
+
+<script>
+(function(){
+
+  var diaries = JSON.parse(localStorage.getItem("mongul_diaries") || "{}");
+  var movies = JSON.parse(localStorage.getItem("mongul_movies") || "[]");
+
+  var now = new Date();
+  var viewYear = now.getFullYear();
+  var viewMonth = now.getMonth();
+
+  var selectedDate = "";
+  var selectedMood = "";
+  var selectedMovie = null;
+  var rating = 0;
+
+  var screens = document.querySelectorAll(".screen");
+
+  function show(id){
+    screens.forEach(function(s){
+      s.classList.remove("active");
+    });
+
+    document.getElementById(id).classList.add("active");
+    window.scrollTo(0,0);
+  }
+
+  function home(){
+    show("calendarScreen");
+    drawCalendar();
+  }
+
+  document.getElementById("homeBtn").onclick = home;
+
+  document.getElementById("menuBtn").onclick = function(){
+    show("menuScreen");
+  };
+
+  document.querySelectorAll("[data-home]").forEach(function(btn){
+    btn.onclick = home;
+  });
+
+  function drawCalendar(){
+
+    var first = new Date(viewYear,viewMonth,1).getDay();
+    var last = new Date(viewYear,viewMonth+1,0).getDate();
+
+    document.getElementById("year").textContent = viewYear + "년";
+    document.getElementById("month").textContent = (viewMonth+1) + "월";
+
+    var cal = document.getElementById("calendar");
+    cal.innerHTML = "";
+
+    for(var i=0;i<first;i++){
+      var empty = document.createElement("div");
+      empty.className = "day empty";
+      cal.appendChild(empty);
+    }
+
+    for(var d=1;d<=last;d++){
+
+      var box = document.createElement("div");
+      box.className = "day";
+
+      var key =
+        viewYear + "-" +
+        String(viewMonth+1).padStart(2,"0") + "-" +
+        String(d).padStart(2,"0");
+
+      box.innerHTML = d;
+
+      if(diaries[key]){
+        var sticker = document.createElement("span");
+        sticker.className = "sticker";
+        sticker.textContent = diaries[key].mood || "♡";
+        box.appendChild(sticker);
+      }
+
+      if(
+        d===now.getDate() &&
+        viewMonth===now.getMonth() &&
+        viewYear===now.getFullYear()
+      ){
+        box.classList.add("today");
+      }
+
+      box.onclick = function(){
+        openDate(this);
+      };
+
+      cal.appendChild(box);
+    }
+  }
+
+  function openDate(box){
+
+    var day = box.firstChild.textContent;
+
+    selectedDate =
+      viewYear + "-" +
+      String(viewMonth+1).padStart(2,"0") + "-" +
+      String(day).padStart(2,"0");
+
+    document.getElementById("moodDate").textContent =
+      selectedDate.replaceAll("-",".") + ".";
+
+    show("moodScreen");
+  }
+
+  document.getElementById("prev").onclick = function(){
+    viewMonth--;
+
+    if(viewMonth<0){
+      viewMonth=11;
+      viewYear--;
+    }
+
+    drawCalendar();
+  };
+
+  document.getElementById("next").onclick = function(){
+    viewMonth++;
+
+    if(viewMonth>11){
+      viewMonth=0;
+      viewYear++;
+    }
+
+    drawCalendar();
+  };
+
+  document.getElementById("addBtn").onclick = function(){
+
+    var d = new Date();
+
+    selectedDate =
+      d.getFullYear()+"-"+
+      String(d.getMonth()+1).padStart(2,"0")+"-"+
+      String(d.getDate()).padStart(2,"0");
+
+    document.getElementById("moodDate").textContent =
+      selectedDate.replaceAll("-",".");
+
+    show("moodScreen");
+  };
+
+  document.querySelectorAll(".mood").forEach(function(btn){
+
+    btn.onclick = function(){
+
+      selectedMood = btn.dataset.mood;
+
+      document.getElementById("writeDate").textContent =
+        selectedDate.replaceAll("-",".");
+
+      document.getElementById("chosenMood").textContent =
+        selectedMood;
+
+      show("writeScreen");
+    };
+
+  });
+
+  document.getElementById("saveDiary").onclick = function(){
+
+    diaries[selectedDate] = {
+      mood:selectedMood,
+      title:document.getElementById("titleInput").value,
+      body:document.getElementById("bodyInput").value
+    };
+
+    localStorage.setItem(
+      "mongul_diaries",
+      JSON.stringify(diaries)
+    );
+
+    document.getElementById("titleInput").value="";
+    document.getElementById("bodyInput").value="";
+
+    alert("일기가 저장됐어요.");
+
+    home();
+  };
+
+  document.getElementById("diaryListBtn").onclick = function(){
+
+    drawDiaryList();
+    show("diaryScreen");
+  };
+
+  function drawDiaryList(){
+
+    var list = document.getElementById("diaryList");
+    list.innerHTML="";
+
+    var keys = Object.keys(diaries).sort().reverse();
+
+    if(keys.length===0){
+      list.innerHTML="<p>아직 기록한 일기가 없어요.</p>";
+      return;
+    }
+
+    keys.forEach(function(key){
+
+      var item = document.createElement("div");
+      item.className="listitem";
+
+      item.innerHTML =
+        "<div class='date'>"+key+"</div>"+
+        "<div>"+(diaries[key].mood||"")+" "+
+        (diaries[key].title||"제목 없는 일기")+
+        "</div>";
+
+      item.onclick=function(){
+
+        var x=diaries[key];
+
+        document.getElementById("detail").innerHTML =
+          "<div class='detailbox'>"+
+          "<div class='date'>"+key+"</div>"+
+          "<div style='font-size:45px'>"+x.mood+"</div>"+
+          "<h2>"+(x.title||"오늘의 기록")+"</h2>"+
+          "<p>"+(x.body||"")+"</p>"+
+          "</div>";
+
+        show("detailScreen");
+      };
+
+      list.appendChild(item);
+    });
+  }
+
+  /* 영화 */
+
+  document.getElementById("movieListBtn").onclick=function(){
+    drawMovies();
+    show("movieScreen");
+  };
+
+  document.getElementById("movieAdd").onclick=function(){
+    show("searchScreen");
+  };
+
+  function drawMovies(){
+
+    var list=document.getElementById("movieList");
+    list.innerHTML="";
+
+    if(movies.length===0){
+      list.innerHTML="<p>아직 기록한 영화가 없어요.</p>";
+      return;
+    }
+
+    movies.forEach(function(m){
+
+      var item=document.createElement("div");
+      item.className="movie";
+
+      item.innerHTML=
+        "<img class='poster' src='"+(m.poster||"")+"'>"+
+        "<div class='movieinfo'>"+
+        "<b>"+m.title+"</b>"+
+        "<div>★ "+m.rating+"</div>"+
+        "<div class='small'>"+(m.year||"")+"</div>"+
+        "</div>";
+
+      list.appendChild(item);
+    });
+  }
+
+  document.getElementById("searchBtn").onclick=searchMovie;
+
+  document.getElementById("movieSearch").addEventListener(
+    "keydown",
+    function(e){
+      if(e.key==="Enter") searchMovie();
+    }
+  );
+
+  function searchMovie(){
+
+    var q=document.getElementById("movieSearch").value.trim();
+
+    if(!q){
+      alert("영화 제목을 입력해주세요.");
+      return;
+    }
+
+    var result=document.getElementById("searchResults");
+
+    result.innerHTML="<p>찾는 중...</p>";
+
+    var url =
+      "https://ko.wikipedia.org/w/api.php"+
+      "?action=query"+
+      "&generator=search"+
+      "&gsrsearch="+encodeURIComponent(q)+
+      "&gsrnamespace=0"+
+      "&gsrlimit=10"+
+      "&prop=pageimages|info"+
+      "&inprop=url"+
+      "&pithumbsize=300"+
+      "&format=json"+
+      "&origin=*";
+
+    fetch(url)
+      .then(function(r){return r.json();})
+      .then(function(data){
+
+        result.innerHTML="";
+
+        var pages=data.query && data.query.pages;
+
+        if(!pages){
+          result.innerHTML="<p>검색 결과가 없어요.</p>";
+          return;
+        }
+
+        Object.keys(pages).forEach(function(id){
+
+          var p=pages[id];
+
+          var item=document.createElement("div");
+          item.className="movie";
+
+          var image =
+            p.thumbnail ?
+            p.thumbnail.source :
+            "";
+
+          item.innerHTML=
+            "<div style='width:75px;height:105px;background:#eee;border-radius:10px;display:flex;align-items:center;justify-content:center'>"+
+            (image ? "<img class='poster' src='"+image+"'>" : "🎬")+
+            "</div>"+
+            "<div class='movieinfo'>"+
+            "<b>"+p.title+"</b>"+
+            "<div class='small'>이 영화를 기록하기</div>"+
+            "</div>";
+
+          item.onclick=function(){
+
+            selectedMovie={
+              title:p.title,
+              poster:image
+            };
+
+            document.getElementById("selectedMovie").innerHTML=
+              "<div class='movie'>"+
+              (image ? "<img class='poster' src='"+image+"'>" : "")+
+              "<div class='movieinfo'><b>"+p.title+"</b></div>"+
+              "</div>";
+
+            show("movieWriteScreen");
+          };
+
+          result.appendChild(item);
+        });
+      })
+      .catch(function(){
+        result.innerHTML=
+          "<p>검색에 실패했어요. 잠시 후 다시 해주세요.</p>";
+      });
+  }
+
+  document.getElementById("stars").onclick=function(e){
+
+    var rect=this.getBoundingClientRect();
+
+    var x=e.clientX-rect.left;
+
+    rating=Math.ceil(x/(rect.width/5));
+
+    if(rating<1)rating=1;
+    if(rating>5)rating=5;
+
+    this.textContent=
+      "★".repeat(rating)+
+      "☆".repeat(5-rating);
+  };
+
+  document.getElementById("saveMovie").onclick=function(){
+
+    if(!selectedMovie){
+      alert("영화를 먼저 선택해주세요.");
+      return;
+    }
+
+    var movie={
+      title:selectedMovie.title,
+      poster:selectedMovie.poster,
+      rating:rating,
+      year:document.getElementById("movieYear").value,
+      director:document.getElementById("movieDirector").value,
+      actors:document.getElementById("movieActors").value,
+      date:document.getElementById("movieDate").value,
+      place:document.getElementById("moviePlace").value,
+      who:document.getElementById("movieWho").value,
+      review:document.getElementById("movieReview").value
+    };
+
+    movies.push(movie);
+
+    localStorage.setItem(
+      "mongul_movies",
+      JSON.stringify(movies)
+    );
+
+    alert("영화가 저장됐어요.");
+
+    drawMovies();
+    show("movieScreen");
+  };
+
+  /* 달력에서 오른쪽으로 밀면 일기 목록 */
+  var startX=0;
+
+  document.getElementById("calendarScreen").addEventListener(
+    "touchstart",
+    function(e){
+      startX=e.touches[0].clientX;
+    }
+  );
+
+  document.getElementById("calendarScreen").addEventListener(
+    "touchend",
+    function(e){
+
+      var endX=e.changedTouches[0].clientX;
+
+      if(endX-startX>60){
+        drawDiaryList();
+        show("diaryScreen");
+      }
+    }
+  );
+
+  drawCalendar();
+
+})();
+</script>
+
+</body>
+</html>
