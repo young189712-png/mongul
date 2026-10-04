@@ -1,12 +1,57 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#fffdfb">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
   <title>몽글</title>
 </head>
 <body>
-  <h1>몽글 앱</h1>
-  <p>정상적으로 연결됐습니다.</p>
+<div id="app">
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="메뉴">⌂</button>
+    <div class="logo">몽글</div>
+    <button class="icon-btn" id="settingsBtn" aria-label="설정">⚙</button>
+  </header>
+
+  <main>
+    <section id="calendarScreen" class="screen active">
+      <div class="month-head">
+        <button class="month-arrow" id="prevMonth">‹</button>
+        <div><div id="year" class="year"></div><div id="month" class="month"></div></div>
+        <button class="month-arrow" id="nextMonth">›</button>
+      </div>
+      <div class="weekdays"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+      <div id="calendar" class="calendar"></div>
+      <button class="fab" id="addBtn">＋</button>
+    </section>
+
+    <section id="moodScreen" class="screen">
+      <button class="back" data-back>‹</button>
+      <div class="date-label" id="moodDate"></div>
+      <h1>오늘의 감정을<br>골라보세요 <span>✦</span></h1>
+      <div id="moods" class="moods"></div>
+    </section>
+
+    <section id="writeScreen" class="screen">
+      <button class="back" data-back>‹</button>
+      <div class="write-date" id="writeDate"></div>
+      <div class="chosen-mood" id="chosenMood"></div>
+      <input id="titleInput" class="title-input" placeholder="오늘은 어떤 하루였나요?">
+      <textarea id="bodyInput" placeholder="천천히 적어보세요.&#10;&#10;오늘 있었던 일, 생각, 고마웠던 순간까지..."></textarea>
+      <div class="write-actions">
+        <button id="saveBtn" class="primary">기록하기</button>
+      </div>
+    </section>
+
+    <section id="detailScreen" class="screen">
+      <button class="back" data-back>‹</button>
+      <div id="detail"></div>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
