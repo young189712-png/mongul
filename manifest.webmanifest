@@ -1,0 +1,10 @@
+{
+  "name": "몽글",
+  "short_name": "몽글",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#fffaf7",
+  "theme_color": "#fffaf7",
+  "lang": "ko"
+}
