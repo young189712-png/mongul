@@ -1,0 +1,1212 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<link rel="manifest" href="./manifest.webmanifest" id="mongul-manifest">
+<meta name="theme-color" content="#fffaf7">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="몽글">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#fffdfb">
+<title>몽글</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/NanumMiNiSonGeurSsi/NanumMiNiSonGeurSsi.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/NanumSinHonBuBu/NanumSinHonBuBu.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/NanumDdoBagDdoBag/NanumDdoBagDdoBag.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/NanumSeGyeJeogInHanGeur/NanumSeGyeJeogInHanGeur.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fonts-archive/NanumHyeJunCe/NanumHyeJunCe.css">
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#fffdfb;color:#292625}body{font-family:Gaegu,"Apple SD Gothic Neo",sans-serif;font-size:17px;-webkit-tap-highlight-color:transparent}button,input,textarea{font:inherit;color:inherit}button{border:0;background:none;cursor:pointer}button:active{transform:scale(.985)}
+#app{width:100%;max-width:430px;min-height:100vh;margin:auto;background:#fffdfb;overflow-x:hidden}.screen{display:none;min-height:100vh;padding:28px 20px 90px}.screen.active{display:block}.topbar{height:76px;padding:16px 18px 0;display:flex;align-items:center;justify-content:space-between;background:#fffdfb}.topbtn{width:44px;height:44px;display:grid;place-items:center}.topbtn svg{width:30px;height:30px;stroke:#222;stroke-width:2.2;fill:none;stroke-linecap:round;stroke-linejoin:round}.brand{font-size:24px;font-weight:700;opacity:.9}
+.calendarScreen{padding-top:0}.calhead{display:flex;align-items:center;justify-content:center;text-align:center;padding:20px 0 14px}.calyear{font-size:20px}.calmonth{font-size:34px;line-height:1.05;letter-spacing:.5px}.calarrow{display:none}.week{display:grid;grid-template-columns:repeat(7,1fr);text-align:center;color:#b2aaa6;font-size:15px;margin:5px 0 7px}.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;transition:.18s ease}.calendar.slideUp{transform:translateY(-15px);opacity:.3}.calendar.slideDown{transform:translateY(15px);opacity:.3}.blank,.day{height:63px}.day{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding-top:8px;border-radius:14px;font-size:18px}.dayNum{line-height:1}.day.sun .dayNum{color:#f0a6a0}.day.sat .dayNum{color:#a8c0e9}.day.today{background:#fff3ee}.sticker{font-size:24px;line-height:1;margin-top:4px}.fab{position:fixed;z-index:20;left:50%;transform:translateX(-50%);bottom:30px;width:64px;height:64px;border-radius:50%;background:transparent;box-shadow:none;font-size:42px;line-height:1}.fab:active{background:#f4f0ed}
+.page{padding-top:8px}.pageHead{display:flex;align-items:center;justify-content:space-between;margin:0 0 22px}.pageHead .title{font-size:28px;font-weight:700}.back{font-size:37px;width:44px;height:44px}.menuPanel{position:fixed;z-index:50;top:74px;left:20px;width:142px;background:#fff;border:1px solid #f0ece9;border-radius:25px;box-shadow:0 12px 30px #00000010;padding:10px 8px}.menuPanel button{display:block;width:100%;padding:12px 16px;text-align:left;font-size:20px;border-radius:18px;color:#8f8a87}.menuPanel button.active{color:#292625}.menuPanel button:active{background:#f7f3f0}.menuPanel button:active{background:#f7f3f0}.hidden{display:none!important}.topbar.hiddenTop{display:none!important}
+/* diary */
+.moods{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:24px}.mood{min-height:112px;border:1px solid #eee9e5;border-radius:20px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}.moodIcon{width:58px;height:58px}.moodName{font-size:15px;color:#6f6864}.writeDate,.sub{color:#aaa39f;font-size:15px}.writeTitle{font-size:27px;margin:20px 0 12px}.field{width:100%;border:0;border-bottom:1px solid #e7e1dd;background:transparent;padding:12px 3px;outline:0;font-size:18px}.area{min-height:230px;resize:none;line-height:1.7;border:0;padding-top:16px}.primary{width:100%;margin-top:18px;padding:14px;border-radius:17px;background:#292625;color:#fff;font-size:19px}.diaryList{display:flex;flex-direction:column;gap:9px}.diaryItem{width:100%;display:flex;align-items:center;gap:12px;padding:13px;border-bottom:1px solid #eee9e5;text-align:left}.diaryItem .emoji{font-size:32px}.grow{flex:1;min-width:0}.diaryItemTitle{font-size:20px}.meta{font-size:14px;color:#aaa39f;margin-top:2px}.detailTitle{font-size:27px;margin:14px 0}.detailBody{white-space:pre-wrap;line-height:1.75;font-size:18px}.detailActions{display:flex;gap:8px;margin-top:24px}.outline{padding:10px 15px;border:1px solid #ddd6d1;border-radius:12px;font-size:16px}.pastelNote{font-size:14px;color:#aaa39f}
+/* movies */
+.movieGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px 12px}.movieTile{text-align:left;min-width:0}.movieTile img{width:100%;aspect-ratio:2/3;display:block;object-fit:cover;background:#f1eeeb;border-radius:2px}.movieTitle{font-size:18px;line-height:1.2;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.movieStars{font-family:Arial,sans-serif;font-size:13px;letter-spacing:0;margin-top:4px}.movieStars .off{color:#d7d3d0}.plus{font-size:34px;width:45px;height:45px}.searchScreen{padding-top:15px}.searchTop{display:flex;align-items:center;gap:8px;margin-bottom:18px}.searchInput{font-size:20px;border:0;background:transparent;flex:1;outline:0;padding:9px 0}.searchInput::placeholder{color:#c5c3c1}.searchX{font-size:28px;color:#aaa}.searchResults{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px 12px;padding-bottom:90px}.searchTile{text-align:left}.searchTile img{width:100%;aspect-ratio:2/3;object-fit:cover;background:#f1eeeb}.searchTile .movieTitle{white-space:normal;min-height:22px}.searchYear{font-size:14px;color:#aaa39f;margin-top:2px}.searchEmpty{text-align:center;color:#aaa39f;padding:80px 0}.searching{text-align:center;color:#aaa39f;padding:35px 0}
+.rateScreen{text-align:center;padding-top:15px}.rateClose{position:absolute;left:18px;top:15px;font-size:33px}.selectedPoster{width:185px;aspect-ratio:2/3;object-fit:cover;background:#f1eeeb;margin:70px auto 16px;display:block}.selectedTitle{font-size:26px;margin-bottom:12px}.bigStars{display:flex;justify-content:center;gap:2px}.bigStar{font-family:Arial,sans-serif;font-size:44px;line-height:1;padding:2px;color:#1f1e1d}.bigStar.off{color:#ddd8d4}.nextBtn{position:fixed;right:max(24px,calc((100vw - 430px)/2 + 20px));bottom:28px;width:62px;height:62px;border-radius:22px;background:#fff;box-shadow:0 5px 20px #00000012;font-size:35px}.stepDots{text-align:center;color:#ddd;margin-top:45px}.stepDots b{color:#666}.autoInfo{margin:28px 0;border-top:1px dashed #ded8d4;border-bottom:1px dashed #ded8d4;padding:12px 0}.autoRow{display:flex;gap:18px;padding:10px 0;font-size:18px;line-height:1.45}.autoLabel{width:42px;color:#a6a09c;flex:none}.autoValue{flex:1}.personal{margin-top:25px}.personal .field{border-bottom:1px solid #e6e1de}.editMenu{position:fixed;z-index:60;right:18px;top:60px;background:#fff;border:1px solid #eee9e5;border-radius:13px;box-shadow:0 10px 25px #00000012;overflow:hidden}.editMenu button{display:block;padding:12px 18px;font-size:17px;width:100%;text-align:left}.editMenu button:active{background:#f6f2ef}.detailMovie{text-align:center}.detailMoviePoster{width:175px;aspect-ratio:2/3;object-fit:cover;background:#f1eeeb;margin:20px auto 14px}.detailMovieTitle{font-size:27px}.detailMovie .movieStars{font-size:18px;margin-top:7px}.detailInfo{margin-top:34px;text-align:left;border-top:1px dashed #ded8d4;padding-top:16px}.detailInfoRow{display:flex;gap:20px;padding:8px 0;font-size:17px;line-height:1.5}.detailInfoLabel{width:48px;color:#a6a09c;flex:none}.review{margin-top:20px;white-space:pre-wrap;line-height:1.75;font-size:18px}.dotsBtn{position:absolute;right:16px;top:15px;font-size:30px}
+@media(max-width:360px){.screen{padding-left:16px;padding-right:16px}.movieGrid,.searchResults{gap:20px 9px}.movieTitle{font-size:16px}.day,.blank{height:58px}}
+
+#printArea{display:none}.printReady{display:block!important;padding:25px;font-family:Arial,sans-serif;background:#fff;color:#222}.printReady h1{font-size:28px}.printReady h2{margin-top:24px}.printReady article{padding:12px 0;border-bottom:1px solid #ddd}.printReady p{white-space:pre-wrap;line-height:1.6}
+body.font-small{font-size:15px}body.font-large{font-size:19px}body.font-round{font-family:"Trebuchet MS","Apple SD Gothic Neo",sans-serif}body.font-clean{font-family:"Apple SD Gothic Neo",sans-serif}body.font-minhye,body.font-pistachio{font-family:"OngleipMinhye",Gaegu,"Apple SD Gothic Neo",sans-serif} .soundPanel{padding:4px 0 18px 56px}.soundPanel.hidden{display:none}.soundTitle{font-size:16px;color:#aaa39f;margin:0 0 10px}.soundChoices{display:grid;grid-template-columns:1fr 1fr;gap:8px}.soundChoice{border:1px solid #e6e0dc;border-radius:12px;padding:11px 10px;text-align:center;font-size:16px;background:#fff}.soundChoice.active{border-color:#b8aaa0;background:#faf6f2}.soundChoice small{display:block;color:#aaa39f;font-size:12px;margin-top:2px}@media print{body{background:#fff}#app{max-width:none}.topbar,.fab,.nextBtn,.back,.plus,.settingRow,.settingsHead{display:none!important}.screen{display:none!important}.calendarScreen{display:block!important}}
+
+
+:root{--font-scale:1}body{font-size:calc(17px * var(--font-scale));overflow:hidden;overscroll-behavior:none}#app{height:100dvh;min-height:100dvh;overflow:hidden}.screen{height:100dvh;min-height:100dvh;overflow:hidden}.calendarScreen{overflow:hidden}.calendar{touch-action:none;overflow:hidden}.calendar .day,.calendar .blank{height:clamp(52px,8.3vh,63px)}.sticker{font-size:18px}.sticker svg{width:34px;height:34px}.moodIcon{width:48px;height:48px}.mood{min-height:100px}.menuPanel{width:118px;padding:7px 6px;border-radius:20px}.menuPanel button{padding:9px 13px;font-size:18px;border-radius:15px}.fab{width:auto;height:auto;bottom:24px;font-size:38px}.movieGrid{grid-template-columns:repeat(3,minmax(0,1fr));direction:ltr}.movieListScreen{overflow-y:auto;touch-action:pan-y}.movieListHead{position:relative}.movieListHead .backSpacer{visibility:hidden}.searchResults{overflow-y:auto}.settingRow{min-height:70px;font-size:20px}.fontSliderWrap{display:grid;grid-template-columns:32px 1fr 32px;align-items:center;gap:8px;font-size:14px;color:#999}.fontSliderWrap input{width:100%;accent-color:#292625;direction:ltr}.fontSizeMarks{display:grid;grid-template-columns:repeat(5,1fr);font-size:12px;color:#aaa;text-align:center;margin-top:3px}.fontSizeTitle{font-size:16px;color:#888;margin:0 0 5px}.fontPanel{padding-left:56px}.fontChoices{margin-top:12px}.soundRow{font-size:18px}.posterCached{opacity:1}.manualAdd{border:0;border-radius:0;border-top:1px solid #eee9e5;padding:20px 0;margin-top:12px;background:transparent}.movieTile img,.searchTile img{background:#f1eeeb}.searchTile img{min-height:0}.searchingSmall{padding:18px 0}.searchEmpty{padding:50px 0}
+.posterFrame{position:relative;width:100%;aspect-ratio:2/3;border-radius:10px;overflow:hidden;background:#f4f1ee;display:flex;align-items:center;justify-content:center}.posterFrame img{width:100%;height:100%;object-fit:cover;display:block}.posterFallback{display:none;position:absolute;inset:0;align-items:center;justify-content:center;color:#aaa;font-size:11px}.posterFrame.noPoster .posterFallback{display:flex}
+</style>
+
+<style id="mongul-v8-fixes">
+/* 소리 */
+.soundBgmTitle{display:flex!important;align-items:center;justify-content:space-between;padding:5px 0 10px;font-size:17px!important;color:#77706c}.soundBgmTitle .toggle{flex:none}.soundCloudPlayer{margin:8px 0 10px;border-radius:14px;overflow:hidden;background:#f5f1ee}.soundCloudPlayer iframe{display:block;width:100%;height:92px;border:0}.soundPowerRow{display:none!important}.soundPanel{padding-left:40px!important}.effectRow{padding-left:0!important}
+/* 더 넓은 글씨 크기 적용 */
+body{font-weight:var(--font-weight,500)}
+/* 둥근 별 */
+.bigStars{gap:6px!important}.bigStar{width:38px!important;height:38px!important;padding:3px!important;background:transparent!important;border:0!important;overflow:visible!important}.cuteStar{width:100%;height:100%;display:block}.bigStar:before,.bigStar:after{content:none!important}
+/* 영화 기록 */
+.moviePersonalScreen .personal{display:flex;flex-direction:column}.movieDateOnly{order:-1;align-self:center;min-width:118px;padding:9px 14px;border:1px solid #e8dfda;border-radius:14px;background:#fff8f5;text-align:center;font-size:17px;cursor:pointer;margin:4px 0 18px}.movieFieldLabel{display:flex!important;align-items:center;gap:8px!important;font-size:17px!important;color:#6f6864!important;margin:7px 0 2px!important}.fieldIcon{width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#f6ece7;font-size:13px;color:#8d776d}.viewCountRow{display:flex;align-items:center;justify-content:space-between;padding:9px 0 11px;font-size:17px}.countButton{min-width:48px;height:34px;border-radius:12px;background:#f7eee9;font-size:17px;border:1px solid #eadfd9}.reviewLabel{margin-top:8px!important}.moviePersonalScreen .area{min-height:120px!important}.moviePersonalScreen .primary{order:4}.moviePersonalScreen .movieDateOnly{order:-1}.moviePersonalScreen .personalQuestions{order:1}.moviePersonalScreen .movieDateOnly + .primary{margin-top:12px}
+/* 날짜 달력 작게 */
+.datePickerOverlay{position:fixed;inset:0;z-index:500;background:#00000018}.datePickerCard{width:min(310px,calc(100vw - 54px))!important;padding:14px!important;border-radius:20px!important}.datePickerHead{font-size:17px!important}.datePickerHead button{font-size:24px!important}.dateWeek{margin:10px 0 5px!important}.dateGrid{gap:3px!important}.dateCell{height:34px!important;border-radius:10px!important;font-size:14px!important}
+/* 설정 아이콘 더 작고 둥글게 */
+.settingIcon{border-radius:12px}.settingIcon svg{width:20px!important;height:20px!important}
+/* 검색/포스터 */
+.searchTile img{content-visibility:visible!important}.posterFrame{contain:layout paint}.searchTile{contain:layout paint}
+/* 기록 상세 시청횟수 */
+.detailCountButton{border:0;border-radius:10px;background:#f7eee9;padding:4px 10px;font-size:15px;min-width:42px}
+</style>
+
+<style>
+.soundBgmTitle{display:flex;align-items:center;justify-content:space-between;padding-right:4px}.soundBgmTitle .toggle{display:inline-block}.soundChoices{grid-template-columns:1fr 1fr!important}.soundChoice{min-height:54px}.effectRow{display:flex;align-items:center;justify-content:space-between;padding:9px 4px 3px 0}.effectRow .toggle{display:inline-block}
+</style>
+<style>
+.lockOverlay{position:fixed;inset:0;background:#fffdfb;z-index:200;display:flex;align-items:center;justify-content:center;padding:25px}.lockCard{width:100%;max-width:330px;text-align:center}.lockIcon{font-size:48px}.lockTitle{font-size:27px;margin-top:10px}.lockHint{font-size:15px;color:#aaa;margin:8px 0 20px}.lockInput{width:180px;text-align:center;letter-spacing:10px;border:0;border-bottom:1px solid #ddd;padding:10px;font-size:24px;outline:0}.lockError{color:#d88;font-size:14px;margin-top:10px}.settingsScreen{padding-top:12px}.settingsHead{height:54px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;text-align:center;margin-bottom:26px}.settingsHead .settingsTitle{font-size:28px;font-weight:700}.settingsBack{font-size:38px}.settingList{display:flex;flex-direction:column}.settingRow{width:100%;min-height:82px;display:flex;align-items:center;gap:20px;text-align:left;font-size:22px}.settingIcon{width:36px;height:36px;display:grid;place-items:center;flex:none}.settingIcon svg{width:31px;height:31px;stroke:#202020;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}.settingRight{margin-left:auto;color:#aaa;font-size:15px}.toggle{width:48px;height:28px;border-radius:20px;background:#ddd;position:relative}.toggle:after{content:"";position:absolute;width:22px;height:22px;background:#fff;border-radius:50%;left:3px;top:3px;box-shadow:0 1px 4px #0002;transition:.18s}.toggle.on{background:#b7dfc0}.toggle.on:after{left:23px}.fontPanel{margin-top:-4px;padding:4px 0 16px 56px}.fontSizeRow{display:flex;gap:8px;margin:6px 0 14px}.sizeBtn{padding:7px 13px;border-radius:13px;background:#f4f0ed;font-size:15px}.sizeBtn.active{background:#292625;color:#fff}.fontChoices{display:flex;flex-direction:column;gap:7px}.fontChoice{padding:10px 12px;border:1px solid #eee8e4;border-radius:13px;text-align:left;font-size:18px;background:#fff}.fontChoice.active{border-color:#c9c0ba;background:#fbf7f4}.manualAdd{grid-column:1/-1;border:1px dashed #ddd5d0;border-radius:18px;padding:17px;text-align:center;color:#77706c;font-size:18px;margin-top:4px}.manualScreen .manualHead{font-size:26px;text-align:center;margin:8px 0 28px}.manualScreen .field{margin-bottom:7px}.manualHint{font-size:14px;color:#aaa;margin-top:-2px;margin-bottom:4px}.manualPoster{width:115px;aspect-ratio:2/3;object-fit:cover;background:#f1eeeb;display:block;margin:12px auto 8px;border-radius:2px}.manualStars{display:flex;justify-content:center}.movieListBrand{font-size:27px;font-weight:700;text-align:center}.movieListHead{display:grid;grid-template-columns:44px 1fr 44px;align-items:center;margin-bottom:25px}.movieListBack{width:44px;height:44px;border:0;background:transparent;font-size:38px;line-height:1}.movieListHead .plus{justify-self:end}.searchingSmall{grid-column:1/-1;text-align:center;color:#aaa;padding:20px 0}.searchDirect{grid-column:1/-1;text-align:center;color:#777;margin-top:2px}.movieMetaBadge{display:none}
+</style>
+</head>
+<body>
+<div id="app">
+<header id="topbar" class="topbar"><button id="homeBtn" class="topbtn" aria-label="메뉴"><svg viewBox="0 0 32 32"><path d="M4 14.5 16 4l12 10.5v13H5z"/><path d="M12 27.5v-8h8v8"/></svg><span id="homeChevron" class="homeChevron" aria-hidden="true"></span></button><div class="brand">몽글</div><button id="settingsBtn" class="topbtn" aria-label="설정"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.43 12.98c.04-.32.07-.65.07-.98s-.02-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.37-.31-.6-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98L14.5 2.42C14.47 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.5.42L9.12 5.07c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.08-.48 0-.6.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.08.65-.08.98s.03.66.08.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.37.31.6.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.38-2.65c.61-.25 1.17-.58 1.69-.98l2.49 1c.23.08.48 0 .6-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5A3.5 3.5 0 1 1 12 8a3.5 3.5 0 0 1 0 7.5z"/></svg></button></header>
+<div id="menuPanel" class="menuPanel hidden"><button id="diaryMenu" class="active">일기</button><button id="movieMenu">영화</button></div>
+<div id="lockOverlay" class="lockOverlay hidden"><div class="lockCard"><div class="lockIcon">⌑</div><div id="lockTitleText" class="lockTitle">몽글 잠금</div><div id="lockHintText" class="lockHint">4자리 비밀번호를 입력해 주세요.</div><input id="unlockPin" inputmode="numeric" maxlength="4" type="password" class="lockInput"><button id="unlockBtn" class="primary">열기</button><div id="unlockError" class="lockError"></div></div></div><main>
+<section id="calendarScreen" class="screen active calendarScreen"><div class="calhead"><div><div id="year" class="calyear"></div><div id="month" class="calmonth"></div></div></div><div class="week"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div id="calendar" class="calendar"></div><button id="addBtn" class="fab">＋</button></section>
+<section id="diaryListScreen" class="screen page"><div class="pageHead"><button class="back" data-calendar>‹</button><div class="title">일기</div><div style="width:44px"></div></div><div id="diaryList" class="diaryList"></div></section>
+<section id="moodScreen" class="screen page"><button class="back" data-calendar>‹</button><div id="moodDate" class="sub"></div><div class="writeTitle">오늘의 감정을<br>골라보세요</div><div id="moods" class="moods"></div></section>
+<section id="writeScreen" class="screen page"><button class="back" data-calendar>‹</button><div id="writeDate" class="writeDate"></div><div id="chosenMood"></div><div class="writeTitle">오늘의 기록</div><input id="diaryTitle" class="field" placeholder="오늘은 어떤 하루였나요?"><textarea id="diaryBody" class="field area" placeholder="천천히 적어보세요."></textarea><button id="saveDiary" class="primary">기록하기</button></section>
+<section id="diaryDetailScreen" class="screen page"><button class="back" data-calendar>‹</button><div id="diaryDetail"></div></section>
+<section id="settingsScreen" class="screen settingsScreen"><div class="settingsHead"><button class="settingsBack" id="settingsBack">‹</button><div class="settingsTitle">설정</div><div></div></div><div class="settingList"><button class="settingRow" id="lockRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><rect x="5" y="13" width="22" height="15" rx="2"/><path d="M9 13V9a7 7 0 0 1 14 0v4"/></svg></span><span>화면 잠금</span></button><button class="settingRow" id="notifyRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><path d="M7 23h18l-2.2-3V13a6.8 6.8 0 0 0-13.6 0v7z"/><path d="M13 27h6"/></svg></span><span>알림</span><span id="notifyToggle" class="toggle"></span></button><button class="settingRow" id="soundRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><path d="M5 13h6l7-6v18l-7-6H5z"/><path d="M22 12c2 2 2 6 0 8M25 9c4 4 4 10 0 14"/></svg></span><span>소리</span></button><div id="soundPanel" class="soundPanel hidden"><div class="soundTitle soundBgmTitle"><span>BGM</span><span id="soundTogglePanel" class="toggle"></span></div><div class="soundChoices"><button class="soundChoice active" data-sound="piano">별빛 피아노<small>잔잔하게</small></button><button class="soundChoice" data-sound="yourname">밤의 피아노<small>따뜻한 멜로디</small></button><button class="soundChoice" data-sound="anime">애니메이션 피아노<small>포근한 멜로디</small></button><button class="soundChoice" data-sound="moon">달빛 멜로디<small>조용하게</small></button></div><div class="effectRow"><span>효과음</span><span id="effectToggle" class="toggle"></span></div></div><button class="settingRow" id="tmdbRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="11"/><path d="M10 16h12M16 10v12"/></svg></span><span>TMDB 영화 검색</span><span id="tmdbStatus" class="settingRight">연결 안 됨</span></button><div id="tmdbPanel" class="fontPanel hidden"><div class="fontSizeTitle">TMDB API 키</div><input id="tmdbKeyInput" type="password" autocomplete="off" spellcheck="false" placeholder="API 키를 입력해 주세요" style="width:100%;box-sizing:border-box;border:1px solid #e6e0dc;border-radius:13px;padding:12px 13px;font-size:16px;background:#fff;outline:none"><div style="font-size:13px;color:#aaa;margin:8px 0 10px">Safari 웹과 홈화면 앱은 저장공간이 달라서, 홈화면에서도 같은 키를 한 번 입력해 주세요.</div><button id="tmdbSaveBtn" class="primary" style="width:100%">TMDB 키 저장</button></div><button class="settingRow" id="fontRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><path d="M6 7h20M16 7v20M10 27h12"/></svg></span><span>폰트</span><span id="fontCurrent" class="settingRight">기본</span></button><div id="fontPanel" class="fontPanel hidden"><div class="fontSizeTitle">글씨 크기</div><div class="fontSliderWrap"><span>작게</span><input id="fontSizeSlider" type="range" min="1" max="5" step="1" value="3"><span>크게</span></div><div class="fontChoices"><button class="fontChoice active" data-font="mini">기본-미니 손글씨</button><button class="fontChoice" data-font="sin">신혼부부</button><button class="fontChoice" data-font="ddobak">또박또박</button><button class="fontChoice" data-font="world">세계적인 한글</button><button class="fontChoice" data-font="hyejun">혜준체</button></div><div class="fontWeightTitle">글씨 굵기</div><div class="fontWeightChoices"><button class="fontWeightChoice" data-weight="400">가늘게</button><button class="fontWeightChoice active" data-weight="500">보통</button><button class="fontWeightChoice" data-weight="700">굵게</button></div></div><button class="settingRow" id="pdfRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><path d="M6 5h14l6 6v16H6z"/><path d="M20 5v7h7"/><path d="M10 21h12M10 25h9"/></svg></span><span>PDF로 저장</span></button><button class="settingRow" id="transferRow"><span class="settingIcon"><svg viewBox="0 0 32 32"><path d="M16 5v15M10 14l6 6 6-6"/><path d="M6 22v5h20v-5"/></svg></span><span>기록 옮기기</span></button><div id="transferPanel" class="fontPanel hidden"><div class="fontSizeTitle">웹과 홈 화면 앱 사이 기록 이동</div><div style="font-size:14px;color:#999;line-height:1.5;margin:6px 0 12px">기록을 내보낸 뒤 다른 쪽 몽글에서 가져오세요. 기존 기록은 지우지 않고 합쳐집니다.</div><button id="exportRecords" class="primary" style="margin-top:0">기록 내보내기</button><button id="importRecords" class="primary" style="margin-top:8px;background:#f3ece7;color:#292625">기록 가져오기</button><input id="importFile" type="file" accept="application/json,.json" style="display:none"></div></div></section>
+<section id="manualMovieScreen" class="screen page manualScreen"><button class="back" id="manualBack">‹</button><div class="manualHead">직접 등록하기</div><input id="manualTitle" class="field" placeholder="영화 또는 드라마 제목"><input id="manualPoster" class="field" placeholder="포스터 이미지 주소 (선택)"><div class="manualHint">포스터 주소를 넣지 않아도 기록할 수 있어요.</div><input id="manualYear" class="field" placeholder="개봉/공개 연도"><input id="manualDirector" class="field" placeholder="감독"><input id="manualActors" class="field" placeholder="배우"><button id="manualNext" class="primary">다음</button></section>
+<section id="movieListScreen" class="screen page"><div class="movieListHead"><button id="movieListBack" class="movieListBack" aria-label="뒤로">‹</button><div class="movieListBrand">영화</div><button id="moviePlus" class="plus">＋</button></div><div id="movieList" class="movieGrid"></div></section>
+<section id="movieSearchScreen" class="screen searchScreen"><div class="searchTop"><button class="back" data-movies>‹</button><input id="movieQuery" class="searchInput" placeholder="영화 검색" autocomplete="off"><button id="clearSearch" class="searchX">×</button></div><div id="movieResults" class="searchResults"></div></section>
+<section id="movieRateScreen" class="screen rateScreen"><button id="rateClose" class="rateClose" aria-label="검색 결과로 돌아가기">×</button><img id="ratePoster" class="selectedPoster"><div id="rateTitle" class="selectedTitle"></div><div id="rateBtns" class="bigStars"></div><div class="stepDots"><b>●</b> ○ ○</div><div class="movieNav"><button id="ratePrev" class="prevBtn">←</button><button id="rateNext" class="nextBtn">→</button></div></section>
+<section id="movieInfoScreen" class="screen page"><button class="back" data-movies>‹</button><div id="movieInfoTop"></div><div id="movieAutoInfo" class="autoInfo"></div><div class="stepDots">○ <b>●</b> ○</div><div class="movieNav"><button id="infoPrev" class="prevBtn">←</button><button id="infoNext" class="nextBtn">→</button></div></section>
+<section id="moviePersonalScreen" class="screen page"><button class="back" data-movies>‹</button><div class="personal"><div class="personalQuestions"><label class="movieFieldLabel"><span class="fieldIcon pinIcon">⌖</span><span>어디서</span></label><input id="moviePlace" class="field" placeholder="장소를 적어주세요"><label class="movieFieldLabel"><span class="fieldIcon personIcon">●</span><span>누구랑</span></label><input id="movieWho" class="field" placeholder="함께 본 사람을 적어주세요"><div class="viewCountRow"><span>시청 횟수</span><button id="movieViewCount" class="countButton" type="button">1</button></div><label class="movieFieldLabel reviewLabel"><span>후기를 남겨주세요</span></label><textarea id="movieReview" class="field area" placeholder=""></textarea></div><div class="movieDateOnly" id="movieDateOnly">날짜 선택</div><button id="saveMovie" class="primary">영화 기록하기</button></div><div class="stepDots">○ ○ <b>●</b></div><div class="movieNav movieNavLast"><button id="personalPrev" class="prevBtn">←</button></div></section>
+<section id="movieDetailScreen" class="screen page"><button class="back" data-movies>‹</button><button id="movieDetailMenuBtn" class="dotsBtn">⋮</button><div id="movieDetail"></div><div id="movieEditMenu" class="editMenu hidden"><button id="editMovie">수정하기</button><button id="deleteMovie">삭제하기</button></div></section>
+</main></div>
+<script>
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);const qs=s=>document.querySelectorAll(s);
+let view=new Date(), diaries=read('mongul_diaries'), movies=read('mongul_movies');
+let selectedDate='',selectedMood='',editingDiary=null,selectedMovie=null,rating=0,editingMovieIndex=-1,movieResults=[];
+function read(k){try{const x=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(x)?x:[]}catch(e){return[]}}
+function persist(){localStorage.setItem('mongul_diaries',JSON.stringify(diaries));localStorage.setItem('mongul_movies',JSON.stringify(movies))}
+function pad(n){return String(n).padStart(2,'0')} function key(y,m,d){return y+'-'+pad(m+1)+'-'+pad(d)} function today(){const d=new Date();return key(d.getFullYear(),d.getMonth(),d.getDate())}
+function esc(s){return String(s??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function show(id){qs('.screen').forEach(x=>x.classList.remove('active'));$(id).classList.add('active');window.scrollTo(0,0);$('menuPanel').classList.add('hidden');if($('movieEditMenu'))$('movieEditMenu').classList.add('hidden');$('topbar').classList.toggle('hiddenTop',id!=='calendarScreen');if(typeof applyFont==='function')requestAnimationFrame(applyFont)}
+function stars(n){n=Number(n)||0;let h='';for(let i=1;i<=5;i++){if(n>=i)h+='★';else if(n===i-.5)h+='◐';else h+='☆'}return h}
+function renderCalendar(){const y=view.getFullYear(),m=view.getMonth();$('year').textContent=y;$('month').textContent=['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'][m];const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();let h='';for(let i=0;i<first;i++)h+='<div class="blank"></div>';for(let d=1;d<=last;d++){const k=key(y,m,d),e=diaries.find(x=>x.date===k),dow=new Date(y,m,d).getDay();h+='<button class="day '+(dow===0?'sun ':'')+(dow===6?'sat ':'')+(k===today()?'today ':'')+'" data-date="'+k+'"><span class="dayNum">'+d+'</span>'+(e?'<span class="sticker">'+moodSvg(e.mood)+'</span>':'')+'</button>'}$('calendar').innerHTML=h;qs('.day').forEach(b=>b.onclick=()=>openDate(b.dataset.date))}
+function monthMove(delta){const c=$('calendar');c.classList.remove('slideUp','slideDown');void c.offsetWidth;c.classList.add(delta<0?'slideDown':'slideUp');setTimeout(()=>{view.setMonth(view.getMonth()+delta);renderCalendar();c.classList.remove('slideUp','slideDown')},140)}
+function moodSvg(type){const map={good:['#D9E9FF','M15 35 Q30 43 45 35','M14 24 q4 -4 8 0 M38 24 q4 -4 8 0'],excited:['#FFE0EF','M14 34 Q30 48 46 34','M14 25 q3 -5 6 0 M34 25 q3 -5 6 0'],happy:['#FFE69A','M12 34 Q30 47 48 34','M15 25 q3 -4 6 0 M33 25 q3 -4 6 0'],love:['#FFD0DA','M14 35 Q30 48 46 35','M15 25 q2 -3 4 0 M35 25 q2 -3 4 0'],calm:['#D9EEDB','M15 34 Q30 39 45 34','M15 25 Q18 28 21 25 M33 25 Q36 28 39 25'],sad:['#DDE8F7','M16 42 Q30 31 44 42','M15 25 q3 3 6 0 M33 25 q3 3 6 0'],tired:['#E8DDF2','M16 38 Q30 38 44 38','M14 25 l7 0 M33 25 l7 0'],angry:['#FFD2C5','M16 38 Q30 31 44 38','M14 24 l8 3 M32 27 l8 -3'],surprised:['#FFF0B9','M23 40 Q30 44 37 40','circle'],sorry:['#DDEFEA','M17 41 Q30 34 43 41','M14 25 q3 3 6 0 M33 25 q3 3 6 0'],plain:['#E8E8E8','M18 37 L42 37','M14 25 l7 0 M35 25 l7 0']};let k=type==='🥰'?'happy':type==='😊'?'good':type==='😍'?'excited':type==='😌'?'calm':type==='😢'?'sad':type==='😣'?'tired':type==='😡'?'angry':type==='😳'?'surprised':type==='🥺'?'sorry':'plain';const [bg,mouth,eyes]=map[k];let eyeSvg=eyes==='circle'?'<circle cx="30" cy="32" r="5" fill="none" stroke="#555" stroke-width="2"/>':'<path d="'+eyes+'" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"/>';return '<svg class="moodIcon" viewBox="0 0 60 60"><circle cx="30" cy="30" r="25" fill="'+bg+'"/><path d="'+mouth+'" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round"/>'+eyeSvg+'</svg>'}
+function moodData(){return [['🥰','행복해요'],['😊','기분 좋아요'],['😍','설레요'],['😌','편안해요'],['😢','슬퍼요'],['😡','화나요'],['😣','지쳤어요'],['😳','놀랐어요'],['🤍','그냥 그래요']]}
+function renderMoods(){ $('moods').innerHTML=moodData().map(x=>'<button class="mood" data-mood="'+x[0]+'">'+moodSvg(x[0])+'<span class="moodName">'+x[1]+'</span></button>').join('');qs('.mood').forEach(b=>b.onclick=()=>{selectedMood=b.dataset.mood;$('chosenMood').innerHTML=moodSvg(selectedMood);$('writeDate').textContent=selectedDate;$('diaryTitle').value=editingDiary?.title||'';$('diaryBody').value=editingDiary?.body||'';show('writeScreen')})}
+function openDate(k){selectedDate=k;editingDiary=diaries.find(x=>x.date===k)||null;if(editingDiary){showDiaryDetail(editingDiary)}else{$('moodDate').textContent=k;renderMoods();show('moodScreen')}}
+function renderDiaryList(){const a=diaries.slice().sort((x,y)=>String(y.date).localeCompare(String(x.date)));$('diaryList').innerHTML=a.length?a.map(e=>'<button class="diaryItem" data-date="'+esc(e.date)+'"><div class="emoji">'+esc(e.mood)+'</div><div class="grow"><div class="diaryItemTitle">'+esc(e.title||'제목 없는 하루')+'</div><div class="meta">'+esc(e.date)+'</div></div></button>').join(''):'<div class="searchEmpty">아직 기록한 일기가 없어요.</div>';qs('#diaryList .diaryItem').forEach(b=>b.onclick=()=>showDiaryDetail(diaries.find(x=>x.date===b.dataset.date)))}
+function showDiaryDetail(e){editingDiary=e;selectedDate=e.date;$('diaryDetail').innerHTML='<div class="sub">'+esc(e.date)+'</div><div style="margin-top:16px">'+moodSvg(e.mood)+'</div><div class="detailTitle">'+esc(e.title||'오늘의 기록')+'</div><div class="detailBody">'+esc(e.body||'')+'</div><div class="detailActions"><button id="editDiary" class="outline">수정하기</button><button id="deleteDiary" class="outline">삭제하기</button></div>';show('diaryDetailScreen');$('editDiary').onclick=()=>editDiary();$('deleteDiary').onclick=()=>{diaries=diaries.filter(x=>x!==e);persist();renderCalendar();renderDiaryList();show('diaryListScreen')}}
+function editDiary(){if(!editingDiary)return;selectedDate=editingDiary.date;selectedMood=editingDiary.mood;renderMoods();$('moodDate').textContent=selectedDate;$('writeDate').textContent=selectedDate;$('chosenMood').innerHTML=moodSvg(selectedMood);$('diaryTitle').value=editingDiary.title||'';$('diaryBody').value=editingDiary.body||'';show('writeScreen')}
+function renderMovies(){const a=movies.map((e,i)=>({...e,_i:i})).sort((x,y)=>String(y.createdAt||y.date||'').localeCompare(String(x.createdAt||x.date||'')));$('movieList').innerHTML=a.length?a.map((e)=>'<button class="movieTile" data-id="'+e._i+'"><img loading="eager" fetchpriority="high" decoding="async" src="'+esc(e.poster||'')+'" onerror="this.style.opacity=.15"><div class="movieTitle">'+esc(e.title)+'</div><div class="movieStars">'+stars(e.rating)+'</div></button>').join(''):'<div class="searchEmpty" style="grid-column:1/-1">아직 기록한 영화가 없어요.<br>＋에서 영화를 추가해보세요.</div>';qs('#movieList .movieTile').forEach(b=>b.onclick=()=>showMovieDetail(movies[Number(b.dataset.id)]))}
+const posterDB={db:null,open(){return new Promise((res,rej)=>{if(this.db)return res(this.db);const r=indexedDB.open('mongulPosterCache',1);r.onupgradeneeded=()=>r.result.createObjectStore('posters');r.onsuccess=()=>{this.db=r.result;res(this.db)};r.onerror=()=>rej(r.error)})},async get(k){try{const db=await this.open();return await new Promise((res,rej)=>{const q=db.transaction('posters').objectStore('posters').get(k);q.onsuccess=()=>res(q.result||null);q.onerror=()=>rej(q.error)})}catch(e){return null}},async put(k,v){try{const db=await this.open();db.transaction('posters','readwrite').objectStore('posters').put(v,k)}catch(e){}}};
+async function warmPosterCache(url){if(!url)return;const old=await posterDB.get(url);if(old)return;try{const r=await fetch(url,{mode:'cors',cache:'force-cache'});if(r.ok){const b=await r.blob();await posterDB.put(url,b)}}catch(e){}}
+async function restorePoster(img,url){if(!url)return;const b=await posterDB.get(url);if(b){const u=URL.createObjectURL(b);img.src=u;img.classList.add('posterCached');return}warmPosterCache(url)}
+function tmdbKey(){
+  var direct=(localStorage.getItem('mongul_tmdb_key')||'').trim();
+  if(direct)return direct;
+  /* 예전 버전에서 저장했을 수 있는 인증값도 그대로 복구 */
+  var aliases=['mongul_tmdb_token','tmdb_access_token','tmdb_token','tmdb_api_key','TMDB_API_KEY','tmdbKey','tmdbToken'];
+  for(var i=0;i<aliases.length;i++){var v=(localStorage.getItem(aliases[i])||'').trim();if(v){localStorage.setItem('mongul_tmdb_key',v);return v}}
+  try{
+    for(var j=0;j<localStorage.length;j++){
+      var k=localStorage.key(j)||'';var v2=(localStorage.getItem(k)||'').trim();
+      if(!v2)continue;
+      if(/tmdb|movie.*api|api.*movie/i.test(k) && v2.length>=20){localStorage.setItem('mongul_tmdb_key',v2);return v2}
+    }
+  }catch(e){}
+  return '';
+}
+function tmdbImage(path,size='w500'){return path?'https://image.tmdb.org/t/p/'+size+path:''}
+function normalizeTitle(v){return String(v||'').toLowerCase().replace(/\s+/g,'').replace(/[\[\]().,:!?\-_/]/g,'')}
+function scoreSearchItem(x,q){const n=normalizeTitle(x.title),qn=normalizeTitle(q);let score=0;if(n===qn)score+=100000;if(n.startsWith(qn))score+=30000;if(n.includes(qn))score+=10000;score+=(Number(x.popularity)||0)*20;score+=(Number(x.vote_count)||0)*0.15;return score}
+async function tmdbFetch(path){
+  const key=tmdbKey();
+  if(!key)throw new Error('NO_TMDB_KEY');
+  const base='https://api.themoviedb.org/3'+path;
+  /* API Read Access Token은 Bearer, 구형 API Key는 query parameter로 사용 */
+  const looksLikeBearer=key.length>40 || /^(eyJ|v4\.|[A-Za-z0-9_-]{50,})/.test(key);
+  let url=base, opts={headers:{accept:'application/json'}};
+  if(looksLikeBearer){opts.headers.Authorization='Bearer '+key}
+  else{url=base+(path.includes('?')?'&':'?')+'api_key='+encodeURIComponent(key)}
+  let r=await fetch(url,opts);
+  /* 저장된 인증 형식이 애매한 경우 두 방식을 한 번 더 시도 */
+  if(!r.ok && looksLikeBearer){
+    const retry=base+(path.includes('?')?'&':'?')+'api_key='+encodeURIComponent(key);
+    r=await fetch(retry,{headers:{accept:'application/json'}});
+  }else if(!r.ok && !looksLikeBearer){
+    r=await fetch(base,{headers:{accept:'application/json',Authorization:'Bearer '+key}});
+  }
+  if(!r.ok)throw new Error('TMDB_'+r.status);
+  return r.json();
+}
+async function searchTMDB(q){const [m,t]=await Promise.all([tmdbFetch('/search/movie?query='+encodeURIComponent(q)+'&language=ko-KR&region=KR&include_adult=false&page=1'),tmdbFetch('/search/tv?query='+encodeURIComponent(q)+'&language=ko-KR&include_adult=false&page=1')]);const arr=[];for(const x of (m.results||[])){if(!x.poster_path)continue;arr.push({id:x.id,type:'movie',title:x.title||x.original_title||'',poster:tmdbImage(x.poster_path,'w342'),year:(x.release_date||'').slice(0,4),overview:x.overview||'',popularity:x.popularity||0,vote_count:x.vote_count||0,rating:x.vote_average||0})}for(const x of (t.results||[])){if(!x.poster_path)continue;arr.push({id:x.id,type:'tv',title:x.name||x.original_name||'',poster:tmdbImage(x.poster_path,'w342'),year:(x.first_air_date||'').slice(0,4),overview:x.overview||'',popularity:x.popularity||0,vote_count:x.vote_count||0,rating:x.vote_average||0})}arr.sort((a,b)=>scoreSearchItem(b,q)-scoreSearchItem(a,q));return arr.slice(0,24)}
+async function searchMovies(){const q=$('movieQuery').value.trim();if(!q){$('movieResults').innerHTML='';return}$('movieResults').innerHTML='<div class="searchingSmall">영화·드라마를 찾는 중...</div>';const cacheKey='mongul_movie_search_v7_'+q.replace(/\s+/g,' ').trim().toLowerCase();try{let cached=read(cacheKey);if(cached.length){movieResults=cached;renderSearchResults(movieResults)}let fresh=[];if(tmdbKey()){try{fresh=await searchTMDB(q)}catch(e){fresh=[]}}if(!fresh.length)fresh=await searchKoreanScreenWorks(q);movieResults=fresh.slice(0,24);localStorage.setItem(cacheKey,JSON.stringify(movieResults));renderSearchResults(movieResults);movieResults.forEach(function(item){if(item.poster)warmPosterCache(item.poster)})}catch(e){if(!movieResults.length)$('movieResults').innerHTML='<div class="searchEmpty">검색을 불러오지 못했어요.<br><small>인터넷 연결을 확인해 주세요.</small></div>';renderSearchResults(movieResults)}}
+async function searchKoreanScreenWorks(q){
+  /* 홈화면 웹앱에서도 TMDB 키가 없어도 검색할 수 있도록
+     위키백과 공식 API를 직접 사용한다. 기존 TMDB 검색은 그대로 우선 사용한다. */
+  const queries=[q,q+' 영화',q+' 드라마'];
+  const map=new Map();
+  const screenWords=/(영화|드라마|텔레비전 시리즈|TV 시리즈|애니메이션 영화|애니메이션 시리즈|미니시리즈|시트콤|film|movie|television series|TV series|anime|sitcom)/i;
+  for(const term of queries){
+    const url='https://ko.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch='+encodeURIComponent(term)+'&gsrnamespace=0&gsrlimit=20&prop=pageimages|extracts&piprop=thumbnail&pithumbsize=342&exintro=1&explaintext=1&format=json&origin=*';
+    try{
+      const r=await fetch(url,{mode:'cors',cache:'no-store'});
+      if(!r.ok)continue;
+      const d=await r.json();
+      const pages=Object.values(d.query?.pages||{});
+      for(const p of pages){
+        const title=p.title||'';
+        const extract=String(p.extract||'');
+        if(!title)continue;
+        const opening=extract.split(/[.!?。]/)[0]||extract.slice(0,180);
+        if(!screenWords.test(title+' '+opening))continue;
+        const clean=title.replace(/\s*\((영화|드라마|TV 시리즈|텔레비전 시리즈|애니메이션)\)\s*$/i,'').trim();
+        const exact=normalizeTitle(clean)===normalizeTitle(q);
+        const poster=p.thumbnail?.source||'';
+        const item={
+          title:clean,
+          poster:poster,
+          year:extractYear(extract),
+          director:'',
+          actors:'',
+          release:extractYear(extract),
+          overview:extract,
+          wiki:title,
+          type:'',
+          tmdbId:null,
+          _exact:exact,
+          _rank:map.size,
+          _views:0
+        };
+        const key=title;
+        if(!map.has(key) || exact)map.set(key,item);
+      }
+    }catch(e){}
+  }
+  let arr=[...map.values()];
+  arr.sort((a,b)=>{
+    if(a._exact!==b._exact)return a._exact?-1:1;
+    const an=normalizeTitle(a.title),bn=normalizeTitle(b.title),qn=normalizeTitle(q);
+    const as=an.startsWith(qn)?2:(an.includes(qn)?1:0);
+    const bs=bn.startsWith(qn)?2:(bn.includes(qn)?1:0);
+    if(as!==bs)return bs-as;
+    return a._rank-b._rank;
+  });
+  return arr.slice(0,24);
+}
+function extractYear(s){const m=String(s||'').match(/(?:19|20)\d{2}/);return m?m[0]:''}
+function loadMovieDetails(p){
+  /* TMDB를 사용할 수 없는 경우에도 영화 선택 화면이 멈추지 않도록
+     검색 결과의 기본 정보를 유지한다. TMDB가 있으면 selectMovie에서 기존 상세조회가 실행된다. */
+  if(!selectedMovie)return;
+  selectedMovie.title=p?.title||selectedMovie.title||'';
+  selectedMovie.poster=p?.poster||selectedMovie.poster||'';
+  selectedMovie.year=p?.year||selectedMovie.year||'';
+  selectedMovie.release=p?.release||selectedMovie.release||selectedMovie.year||'';
+  selectedMovie.overview=p?.overview||selectedMovie.overview||'';
+  selectedMovie.director=p?.director||selectedMovie.director||'';
+  selectedMovie.actors=p?.actors||selectedMovie.actors||'';
+  selectedMovie.wiki=p?.wiki||selectedMovie.wiki||selectedMovie.title;
+  renderAutoInfo();
+}
+function openManualMovie(){editingMovieIndex=-1;selectedMovie=null;rating=0;['manualTitle','manualPoster','manualYear','manualDirector','manualActors'].forEach(id=>$(id).value='');show('manualMovieScreen')}
+function renderSearchResults(list){const box=$('movieResults');let h=list.length?list.map((p,i)=>{const poster=esc(p.poster||'');return '<button class="searchTile" data-i="'+i+'"><div class="posterFrame"><img loading="eager" fetchpriority="high" decoding="async" src="'+poster+'" data-poster="'+poster+'" onerror="this.style.display=\'none\';this.parentElement.classList.add(\'noPoster\')"><span class="posterFallback">포스터 준비 중</span></div><div class="movieTitle">'+esc(p.title)+'</div><div class="searchYear">'+esc(p.year||'')+'</div></button>'}).join(''):'<div class="searchEmpty" style="grid-column:1/-1">원하는 영화·드라마가 없어요.</div>';h+='<button class="manualAdd" id="searchManual">＋ 직접 등록하기</button>';box.innerHTML=h;qs('.searchTile').forEach((b,i)=>{const img=b.querySelector('img'),url=list[i]?.poster||'';if(url){restorePoster(img,url)}b.onclick=()=>selectMovie(movieResults[Number(b.dataset.i)])});$('searchManual').onclick=()=>openManualMovie()}
+async function selectMovie(p){selectedMovie={title:p.title||'',poster:p.poster||'',year:p.year||'',director:'',actors:'',release:p.year||'',overview:p.overview||'',wiki:p.wiki||p.title||'',type:p.type||'',tmdbId:p.id||null};rating=0;renderRating();$('ratePoster').src=selectedMovie.poster;$('rateTitle').textContent=selectedMovie.title;show('movieRateScreen');if(selectedMovie.tmdbId){await loadTMDBDetails(selectedMovie)}else await loadMovieDetails(p.wiki||p.title)}
+async function koreanPersonName(id,fallback){try{const d=await tmdbFetch('/person/'+id+'?language=ko-KR');return d.name||fallback}catch(e){return fallback}}
+async function loadTMDBDetails(m){try{const path=(m.type==='tv'?'/tv/':'/movie/')+m.tmdbId+'?language=ko-KR&append_to_response=credits';const d=await tmdbFetch(path);m.title=m.type==='tv'?(d.name||m.title):(d.title||m.title);m.poster=tmdbImage(d.poster_path,'w342')||m.poster;m.overview=d.overview||m.overview||'';m.year=(m.type==='tv'?(d.first_air_date||''):(d.release_date||'')).slice(0,4)||m.year;m.release=m.year;const cast=(d.credits?.cast||[]).slice(0,5).filter(x=>x.name).map(async x=>await koreanPersonName(x.id,x.name));const castNames=await Promise.all(cast);m.actors=castNames.filter(Boolean).join(', ');if(m.type==='tv'){const creators=await Promise.all((d.created_by||[]).filter(x=>x.name).map(x=>koreanPersonName(x.id,x.name)));m.director=creators.filter(Boolean).join(', ')}else{const directors=await Promise.all((d.credits?.crew||[]).filter(x=>x.job==='Director'&&x.name).slice(0,3).map(x=>koreanPersonName(x.id,x.name)));m.director=directors.filter(Boolean).join(', ')}$('ratePoster').src=m.poster;$('rateTitle').textContent=m.title;renderAutoInfo()}catch(e){}}
+function renderRating(){let h='';for(let i=1;i<=5;i++){const state=rating>=i?'full':(rating===i-.5?'half':'off');const gid='starGrad'+i;const fill=state==='full'?'#e4a08f':state==='half'?'url(#'+gid+')':'#ded8d4';h+='<button class="bigStar '+state+'" data-r="'+i+'" aria-label="'+i+'점"><svg class="cuteStar" viewBox="0 0 100 100"><defs><linearGradient id="'+gid+'" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="50%" stop-color="#e4a08f"/><stop offset="50%" stop-color="#ded8d4"/></linearGradient></defs><path d="M50 8 L61 36 L91 38 L68 57 L75 87 L50 70 L25 87 L32 57 L9 38 L39 36 Z" fill="'+fill+'" stroke="'+(state==='off'?'#d5cfca':'#df9785')+'" stroke-width="3" stroke-linejoin="round"/></svg></button>'}$('rateBtns').innerHTML=h;qs('.bigStar').forEach(b=>b.onclick=e=>{const r=Number(b.dataset.r);const rect=b.getBoundingClientRect();rating=(e.clientX-rect.left)<rect.width/2?r-.5:r;renderRating()})}
+function movieTopHTML(){return '<div style="text-align:center"><img class="detailMoviePoster" src="'+esc(selectedMovie.poster)+'"><div class="detailMovieTitle">'+esc(selectedMovie.title)+'</div><div class="movieStars" style="font-size:18px">'+stars(rating)+'</div></div>'}
+function renderAutoInfo(){$('movieInfoTop').innerHTML=movieTopHTML();$('movieAutoInfo').innerHTML='<div class="autoRow"><div class="autoLabel">개봉</div><div class="autoValue">'+esc(selectedMovie.year||selectedMovie.release||'정보 없음')+'</div></div><div class="autoRow"><div class="autoLabel">감독</div><div class="autoValue">'+esc(selectedMovie.director||'정보 없음')+'</div></div><div class="autoRow"><div class="autoLabel">배우</div><div class="autoValue">'+esc(selectedMovie.actors||'정보 없음')+'</div></div>';}
+function startPersonal(){const old=editingMovieIndex>=0?movies[editingMovieIndex]:null;$('moviePlace').value=old?.place||'';$('movieWho').value=old?.who||'';$('movieReview').value=old?.review||'';$('movieDateOnly').textContent=old?.date||today();$('movieDateOnly').dataset.date=old?.date||today();$('movieViewCount').textContent=String(old?.viewCount||1);show('moviePersonalScreen')}
+function showMovieDetail(e){editingMovieIndex=movies.indexOf(e);$('movieDetail').innerHTML='<div class="detailMovie"><img class="detailMoviePoster" src="'+esc(e.poster||'')+'"><div class="detailMovieTitle">'+esc(e.title)+'</div><div class="movieStars">'+stars(e.rating)+'</div></div><div class="detailInfo"><div class="detailInfoRow"><div class="detailInfoLabel">개봉</div><div>'+esc(e.year||'-')+'</div></div><div class="detailInfoRow"><div class="detailInfoLabel">감독</div><div>'+esc(e.director||'-')+'</div></div><div class="detailInfoRow"><div class="detailInfoLabel">배우</div><div>'+esc(e.actors||'-')+'</div></div><div class="detailInfoRow"><div class="detailInfoLabel">날짜</div><div>'+esc(e.date||'-')+'</div></div><div class="detailInfoRow"><div class="detailInfoLabel">장소</div><div>'+esc(e.place||'-')+'</div></div><div class="detailInfoRow"><div class="detailInfoLabel">함께</div><div>'+esc(e.who||'-')+'</div></div><div class="detailInfoRow"><div class="detailInfoLabel">시청 횟수</div><div><button id="detailCountButton" class="detailCountButton">'+esc(String(e.viewCount||1))+'회</button></div></div><div class="review">'+esc(e.review||'')+'</div></div>';show('movieDetailScreen');const cb=$('detailCountButton');if(cb)cb.onclick=()=>{e.viewCount=(Number(e.viewCount)||1)+1;cb.textContent=e.viewCount+'회';movies[editingMovieIndex]=e;persist()}}
+function editMovie(){const e=movies[editingMovieIndex];if(!e)return;selectedMovie={title:e.title,poster:e.poster,year:e.year,director:e.director,actors:e.actors,release:e.release||'',overview:e.overview||'',wiki:e.wiki||e.title};rating=e.rating||0;renderRating();$('ratePoster').src=e.poster;$('rateTitle').textContent=e.title;show('movieRateScreen');loadMovieDetails(e.wiki||e.title)}
+document.addEventListener('click',e=>{if(!e.target.closest('#homeBtn')&&!e.target.closest('#menuPanel'))$('menuPanel').classList.add('hidden');if(e.target.closest('button'))playEffect()});$('diaryMenu').onclick=()=>{renderDiaryList();$('diaryMenu').classList.add('active');$('movieMenu').classList.remove('active');show('diaryListScreen')};$('movieMenu').onclick=()=>{renderMovies();$('movieMenu').classList.add('active');$('diaryMenu').classList.remove('active');show('movieListScreen')};$('addBtn').onclick=()=>openDate(today());
+qs('[data-calendar]').forEach(b=>b.onclick=()=>show('calendarScreen'));qs('[data-movies]').forEach(b=>b.onclick=()=>{renderMovies();show('movieListScreen')});
+$('saveDiary').onclick=()=>{const e={date:selectedDate,mood:selectedMood,title:$('diaryTitle').value.trim(),body:$('diaryBody').value};diaries=diaries.filter(x=>x.date!==selectedDate);diaries.push(e);persist();renderCalendar();renderDiaryList();showDiaryDetail(e)};
+$('moviePlus').onclick=()=>{$('movieQuery').value='';$('movieResults').innerHTML='';show('movieSearchScreen');setTimeout(()=>$('movieQuery').focus(),50)};$('movieQuery').oninput=()=>{clearTimeout(window.mgTimer);window.mgTimer=setTimeout(searchMovies,350)};$('movieQuery').onkeydown=e=>{if(e.key==='Enter')searchMovies()};$('clearSearch').onclick=()=>{$('movieQuery').value='';$('movieResults').innerHTML='';$('movieQuery').focus()};
+$('rateNext').onclick=()=>{renderAutoInfo();show('movieInfoScreen')};$('infoNext').onclick=startPersonal;$('rateClose').onclick=()=>{renderSearchResults(movieResults);show('movieSearchScreen')};$('ratePrev').onclick=()=>{show('movieSearchScreen')};$('infoPrev').onclick=()=>{show('movieRateScreen')};$('personalPrev').onclick=()=>{show('movieInfoScreen')};
+$('movieViewCount').onclick=()=>{const n=Number($('movieViewCount').textContent)||1;$('movieViewCount').textContent=String(n+1)};
+$('saveMovie').onclick=()=>{const prev=editingMovieIndex>=0?movies[editingMovieIndex]:null;const data={title:selectedMovie.title,poster:selectedMovie.poster,rating,year:selectedMovie.year||'',director:selectedMovie.director||'',actors:selectedMovie.actors||'',release:selectedMovie.release||'',overview:selectedMovie.overview||'',wiki:selectedMovie.wiki||selectedMovie.title,date:$('movieDateOnly').dataset.date||today(),place:$('moviePlace').value.trim(),who:$('movieWho').value.trim(),viewCount:Number($('movieViewCount').textContent)||1,review:$('movieReview').value,createdAt:prev?.createdAt||Date.now()};if(editingMovieIndex>=0){movies[editingMovieIndex]=data}else movies.push(data);editingMovieIndex=-1;persist();renderMovies();show('movieListScreen')};
+$('movieDetailMenuBtn').onclick=()=>{$('movieEditMenu').classList.toggle('hidden')};$('editMovie').onclick=()=>{$('movieEditMenu').classList.add('hidden');editMovie()};$('deleteMovie').onclick=()=>{if(editingMovieIndex>=0){movies.splice(editingMovieIndex,1);persist();renderMovies();show('movieListScreen')}};
+let soundCtx=null,soundGain=null,soundNodes=[],soundTimer=null;
+function ensureAudio(){if(!soundCtx)soundCtx=new(window.AudioContext||window.webkitAudioContext)();if(soundCtx.state==='suspended')return soundCtx.resume().catch(()=>{});return Promise.resolve()}
+function stopSoftSound(save=false){if(soundTimer){clearInterval(soundTimer);soundTimer=null}soundNodes.forEach(n=>{try{n.stop&&n.stop()}catch(e){}try{n.disconnect&&n.disconnect()}catch(e){}});soundNodes=[];if(soundGain&&soundCtx){try{soundGain.gain.cancelScheduledValues(soundCtx.currentTime);soundGain.gain.setTargetAtTime(0,soundCtx.currentTime,.05)}catch(e){}}if(save)localStorage.setItem('mongul_sound','0')}
+async function startSoftSound(mode){mode=mode||localStorage.getItem('mongul_sound_mode')||'piano';try{await ensureAudio();stopSoftSound(false);soundGain=soundCtx.createGain();soundGain.gain.value=.9;soundGain.connect(soundCtx.destination);const patterns={piano:[261.63,329.63,392,523.25,493.88,392,329.63,293.66],yourname:[220,277.18,329.63,440,392,329.63,277.18,246.94],anime:[293.66,349.23,392,493.88,440,392,349.23,329.63],moon:[196,246.94,293.66,369.99,329.63,293.66,246.94,220]};const notes=patterns[mode]||patterns.piano;let step=0;const play=()=>{const t=soundCtx.currentTime;const o=soundCtx.createOscillator(),g=soundCtx.createGain();o.type='sine';o.frequency.setValueAtTime(notes[step%notes.length],t);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.32,t+.07);g.gain.exponentialRampToValueAtTime(.001,t+1.65);o.connect(g).connect(soundGain);o.start(t);o.stop(t+1.7);soundNodes.push(o);step++};play();soundTimer=setInterval(play,1700);localStorage.setItem('mongul_sound_mode',mode);localStorage.setItem('mongul_sound','1')}catch(e){}}
+function playEffect(){if(localStorage.getItem('mongul_effect')!=='1')return;try{if(!soundCtx)soundCtx=new(window.AudioContext||window.webkitAudioContext)();const ctx=soundCtx;const play=()=>{const t=ctx.currentTime;const b=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.065),ctx.sampleRate),d=b.getChannelData(0);for(let j=0;j<d.length;j++){const env=1-j/d.length;d[j]=(Math.random()*2-1)*env*env*.16}const src=ctx.createBufferSource(),hp=ctx.createBiquadFilter(),g=ctx.createGain();hp.type='highpass';hp.frequency.value=1100;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.055,t+.004);g.gain.exponentialRampToValueAtTime(.0001,t+.055);src.buffer=b;src.connect(hp).connect(g).connect(ctx.destination);src.start(t)};if(ctx.state==='suspended'){ctx.resume().then(play).catch(()=>{})}else play()}catch(e){}}
+function toggleSoftSound(on){if(on)startSoftSound(localStorage.getItem('mongul_sound_mode')||'piano');else stopSoftSound(true)}
+$('movieListBack').onclick=()=>show('calendarScreen');
+function refreshTMDBSetting(){const k=tmdbKey();$('tmdbStatus').textContent=k?'연결됨':'연결 안 됨';$('tmdbKeyInput').value=k||'';}
+$('tmdbRow').onclick=()=>{const p=$('tmdbPanel');p.classList.toggle('hidden');refreshTMDBSetting();};
+$('tmdbSaveBtn').onclick=()=>{const k=$('tmdbKeyInput').value.trim();if(!k){localStorage.removeItem('mongul_tmdb_key');$('tmdbStatus').textContent='연결 안 됨';alert('TMDB API 키를 입력해 주세요.');return}localStorage.setItem('mongul_tmdb_key',k);$('tmdbStatus').textContent='연결됨';alert('TMDB API 키가 저장됐어요. 이제 홈화면에서도 영화 검색을 사용할 수 있어요.');};
+$('settingsBtn').onclick=()=>{show('settingsScreen');$('menuPanel').classList.add('hidden')};
+$('settingsBack').onclick=()=>show('calendarScreen');
+$('homeBtn').onclick=()=>{const p=$('menuPanel');p.classList.toggle('hidden');$('homeChevron').classList.toggle('open',!p.classList.contains('hidden'))};
+$('lockRow').onclick=()=>{if(localStorage.getItem('mongul_lock')==='1'){if(confirm('화면 잠금을 해제할까요?')){localStorage.removeItem('mongul_pin');localStorage.setItem('mongul_lock','0')}}else{showLockSetup()}};
+function showLockSetup(){const ov=$('lockOverlay');ov.classList.remove('hidden');$('lockTitleText').textContent='화면 잠금 설정';$('lockHintText').textContent='새 비밀번호 4자리를 입력해 주세요.';$('unlockPin').value='';$('unlockPin').type='password';$('unlockBtn').textContent='잠금 설정';$('unlockError').textContent='';$('unlockPin').focus();$('unlockBtn').onclick=()=>{const pin=$('unlockPin').value;if(!/^\d{4}$/.test(pin)){ $('unlockError').textContent='숫자 4자리를 입력해 주세요.'; return } localStorage.setItem('mongul_pin',pin);localStorage.setItem('mongul_lock','1');ov.classList.add('hidden');$('unlockPin').value='';$('unlockBtn').textContent='열기';$('lockTitleText').textContent='몽글 잠금';$('lockHintText').textContent='4자리 비밀번호를 입력해 주세요.';bindUnlock();};}
+function bindUnlock(){$('unlockBtn').onclick=()=>{if($('unlockPin').value===localStorage.getItem('mongul_pin')){$('lockOverlay').classList.add('hidden');$('unlockPin').value='';$('unlockError').textContent=''}else $('unlockError').textContent='비밀번호가 맞지 않아요.'}};
+$('notifyRow').onclick=async()=>{if('Notification' in window){try{const p=await Notification.requestPermission();if(p==='granted'){$('notifyToggle').classList.add('on');localStorage.setItem('mongul_notify','1')}else{$('notifyToggle').classList.remove('on');localStorage.setItem('mongul_notify','0')}}catch(e){}}else alert('이 브라우저에서는 알림을 지원하지 않아요.')};
+$('soundRow').onclick=()=>{$('soundPanel').classList.toggle('hidden')};$('soundTogglePanel').onclick=e=>{e.stopPropagation();const on=!$('soundTogglePanel').classList.contains('on');$('soundTogglePanel').classList.toggle('on',on);toggleSoftSound(on)};$('effectToggle').onclick=e=>{e.stopPropagation();const on=!$('effectToggle').classList.contains('on');$('effectToggle').classList.toggle('on',on);localStorage.setItem('mongul_effect',on?'1':'0')};qs('.soundChoice').forEach(b=>b.onclick=e=>{e.stopPropagation();qs('.soundChoice').forEach(x=>x.classList.toggle('active',x===b));localStorage.setItem('mongul_sound_mode',b.dataset.sound);if($('soundTogglePanel').classList.contains('on'))startSoftSound(b.dataset.sound)});
+$('fontRow').onclick=()=>{$('fontPanel').classList.toggle('hidden')};
+function applyFont(){
+  let f=localStorage.getItem('mongul_font')||'mini';
+  const valid=['mini','sin','ddobak','world','hyejun']; if(!valid.includes(f))f='mini';
+  const sv=Math.min(5,Math.max(1,Number(localStorage.getItem('mongul_font_slider')||3)));
+  const weight=Number(localStorage.getItem('mongul_font_weight')||500);
+  const scales={1:.78,2:.88,3:1,4:1.12,5:1.24}; const scale=scales[sv];
+  document.body.classList.remove('font-mini','font-sin','font-ddobak','font-world','font-hyejun');
+  document.body.classList.add({mini:'font-mini',sin:'font-sin',ddobak:'font-ddobak',world:'font-world',hyejun:'font-hyejun'}[f]);
+  document.body.style.setProperty('--font-scale',scale); document.body.style.setProperty('--font-weight',weight);
+  const skip='.dayNum,.week,.calyear,.calmonth,.sticker,.settingIcon,.back,.movieListBack,.settingsBack,.topbtn,.bigStar,svg,path,circle,rect,line,polyline,polygon,img,input[type=range]';
+  document.querySelectorAll('#app *').forEach(el=>{
+    if(el.matches(skip)||el.closest('svg')) return;
+    const cs=getComputedStyle(el); const n=parseFloat(cs.fontSize);
+    if(!Number.isFinite(n)||n<8) return;
+    if(!el.dataset.mongulBase) el.dataset.mongulBase=n;
+    el.style.setProperty('font-size',(Number(el.dataset.mongulBase)*scale)+'px','important');
+    el.style.setProperty('font-weight',weight,'important');
+  });
+  document.documentElement.style.setProperty('--font-scale',scale);
+  $('fontSizeSlider').value=sv;
+  qs('.fontChoice').forEach(b=>b.classList.toggle('active',b.dataset.font===f));
+  qs('.fontWeightChoice').forEach(b=>b.classList.toggle('active',Number(b.dataset.weight)===weight));
+  const names={mini:'기본-미니 손글씨',sin:'신혼부부',ddobak:'또박또박',world:'세계적인 한글',hyejun:'혜준체'}; $('fontCurrent').textContent=names[f];
+}
+qs('.fontChoice').forEach(b=>b.onclick=()=>{localStorage.setItem('mongul_font',b.dataset.font);applyFont()});qs('.fontWeightChoice').forEach(b=>b.onclick=()=>{localStorage.setItem('mongul_font_weight',b.dataset.weight);applyFont()});$('fontSizeSlider').oninput=e=>{localStorage.setItem('mongul_font_slider',e.target.value);applyFont()};$('pdfRow').onclick=()=>{let p=document.getElementById('printArea');if(!p){p=document.createElement('div');p.id='printArea';document.body.appendChild(p)}const ds=diaries.slice().sort((a,b)=>String(a.date).localeCompare(String(b.date)));const ms=movies.slice().sort((a,b)=>String(a.createdAt||a.date||'').localeCompare(String(b.createdAt||b.date||'')));p.innerHTML='<h1>몽글 기록</h1><h2>일기</h2>'+ds.map(e=>'<article><b>'+esc(e.date||'')+' · '+esc(e.title||'')+'</b><p>'+esc(e.body||'')+'</p></article>').join('')+'<h2>영화</h2>'+ms.map(e=>'<article><b>'+esc(e.title||'')+' · '+('★'.repeat(Number(e.rating)||0))+'</b><p>'+esc(e.review||'')+'</p></article>').join('');p.classList.add('printReady');window.print();setTimeout(()=>p.classList.remove('printReady'),500)};if(localStorage.getItem('mongul_notify')==='1')$('notifyToggle').classList.add('on');if(localStorage.getItem('mongul_sound')==='1')$('soundTogglePanel').classList.add('on');bindUnlock();if(localStorage.getItem('mongul_lock')==='1'&&localStorage.getItem('mongul_pin'))$('lockOverlay').classList.remove('hidden');applyFont();
+const savedSound=localStorage.getItem("mongul_sound_mode")||"piano";qs(".soundChoice").forEach(b=>b.classList.toggle("active",b.dataset.sound===savedSound));if(localStorage.getItem("mongul_sound")==="1")$("soundTogglePanel").classList.add("on");if(localStorage.getItem("mongul_effect")==="1")$("effectToggle").classList.add("on");const savedBtn=document.querySelector('.soundChoice[data-sound="'+savedSound+'"]');if(savedBtn&&localStorage.getItem("mongul_sound")==="1"){setTimeout(()=>startSoftSound(savedSound),250)}
+$('manualBack').onclick=()=>show('movieSearchScreen');$('manualNext').onclick=()=>{const title=$('manualTitle').value.trim();if(!title){alert('제목을 입력해 주세요.');return}selectedMovie={title,poster:$('manualPoster').value.trim(),year:$('manualYear').value.trim(),director:$('manualDirector').value.trim(),actors:$('manualActors').value.trim(),release:'',overview:'',wiki:title};rating=0;renderRating();$('ratePoster').src=selectedMovie.poster||'';$('rateTitle').textContent=title;show('movieRateScreen')};
+
+function openThemedDatePicker(){
+ const cur=$('movieDateOnly').dataset.date||today(); const d=new Date(cur+'T00:00:00'); let y=d.getFullYear(),m=d.getMonth();
+ const ov=document.createElement('div');ov.className='datePickerOverlay';ov.innerHTML='<div class="datePickerCard"><div class="datePickerHead"><button class="dpPrev">‹</button><div class="dpTitle"></div><button class="dpNext">›</button></div><div class="dateWeek"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="dateGrid"></div></div>';document.body.appendChild(ov);
+ const close=()=>ov.remove(); const draw=()=>{const names=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];ov.querySelector('.dpTitle').textContent=y+'년 '+names[m];const first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate();let h='';for(let i=0;i<first;i++)h+='<span></span>';for(let day=1;day<=last;day++){const k=key(y,m,day);h+='<button class="dateCell '+(k===cur?'selected':'')+'" data-date="'+k+'">'+day+'</button>'}ov.querySelector('.dateGrid').innerHTML=h;ov.querySelectorAll('.dateCell').forEach(b=>b.onclick=()=>{$('movieDateOnly').dataset.date=b.dataset.date;$('movieDateOnly').textContent=b.dataset.date;close()})};ov.querySelector('.dpPrev').onclick=()=>{m--;if(m<0){m=11;y--}draw()};ov.querySelector('.dpNext').onclick=()=>{m++;if(m>11){m=0;y++}draw()};ov.addEventListener('click',e=>{if(e.target===ov)close()});draw();
+}
+$('movieDateOnly').onclick=()=>openThemedDatePicker();
+let sx=0,sy=0,calendarTouch=false;const calEl=$('calendarScreen');calEl.addEventListener('touchstart',e=>{if(!calEl.classList.contains('active'))return;calendarTouch=true;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});calEl.addEventListener('touchmove',e=>{if(!calendarTouch)return;const dx=e.touches[0].clientX-sx,dy=e.touches[0].clientY-sy;if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>8)e.preventDefault()},{passive:false});calEl.addEventListener('touchend',e=>{if(!calendarTouch)return;calendarTouch=false;const dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)&&dx>0){renderDiaryList();show('diaryListScreen')}else if(Math.abs(dy)>55&&Math.abs(dy)>Math.abs(dx)){monthMove(dy<0?1:-1)}},{passive:true});
+renderCalendar();
+})();
+</script>
+
+<style>
+/* 몽글 모바일 동작 보정 */
+.screen:not(.calendarScreen){overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;touch-action:pan-y;padding-bottom:150px}.movieListScreen,.searchScreen,.settingsScreen,.rateScreen,.manualScreen{overflow-y:auto}.calendarScreen{overflow:hidden!important}.fab:active{transform:translateX(-50%) scale(.985)!important}.movieListBack,.back,.settingsBack{font-size:38px!important;line-height:1!important;transform:none!important}.movieNav{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);width:min(390px,calc(100vw - 40px));display:flex;justify-content:space-between;z-index:40;pointer-events:none}.movieNav button{pointer-events:auto}.prevBtn,.nextBtn{position:static!important;flex:none;width:58px;height:58px;border-radius:20px;background:#fff;box-shadow:0 5px 20px #00000012;font-size:28px!important;line-height:1}.movieNavLast{justify-content:flex-start}.moviePersonalScreen{padding-bottom:175px!important}.moviePersonalScreen .primary{margin-bottom:8px}.bigStars{gap:5px}.bigStar{width:34px;height:34px;padding:0;border:0;background:transparent;font-family:Arial,sans-serif;font-size:30px!important;line-height:34px;color:#d6c8c0;position:relative;overflow:hidden}.bigStar.full{color:#d99b88}.bigStar.half{color:transparent;background:linear-gradient(90deg,#d99b88 50%,#ddd8d4 50%);-webkit-background-clip:text;background-clip:text}.bigStar.off{color:#ddd8d4}.effectRow{display:flex;align-items:center;justify-content:space-between;margin:2px 0 12px;padding:10px 0 10px 56px;font-size:18px;color:#6f6864}.fontSliderWrap input{direction:ltr!important}.font-mini{font-family:'NanumMiNiSonGeurSsi',sans-serif}.font-sin{font-family:'NanumSinHonBuBu',sans-serif}.font-ddobak{font-family:'NanumDdoBagDdoBag',sans-serif}.font-world{font-family:'NanumSeGyeJeogInHanGeur',sans-serif}.font-hyejun{font-family:'NanumHyeJunCe',sans-serif}.font-mini .movieStars,.font-sin .movieStars,.font-ddobak .movieStars,.font-world .movieStars,.font-hyejun .movieStars{font-family:Arial,sans-serif}.font-mini .back,.font-sin .back,.font-ddobak .back,.font-world .back,.font-hyejun .back,.font-mini .movieListBack,.font-sin .movieListBack,.font-ddobak .movieListBack,.font-world .movieListBack,.font-hyejun .movieListBack,.font-mini .settingsBack,.font-sin .settingsBack,.font-ddobak .settingsBack,.font-world .settingsBack,.font-hyejun .settingsBack{font-size:38px!important}
+</style>
+
+<style>
+:root{--font-weight:500}
+body{font-weight:var(--font-weight)}
+.day,.dayNum{font-size:18px!important;font-weight:400!important}
+.calendar .day{font-size:18px!important}
+.sticker{font-size:18px!important}
+.fontSizeMarks{display:none!important}
+.settingRow{min-height:62px!important}
+.settingIcon{width:32px;height:32px}.settingIcon svg{width:27px;height:27px}
+.settingRow{gap:16px!important;font-size:20px!important}
+.fontChoices{gap:6px!important}.fontChoice{padding:8px 11px!important;font-size:17px!important}
+.fontWeightTitle{font-size:15px;color:#aaa39f;margin:14px 0 7px}.fontWeightChoices{display:flex;gap:7px}.fontWeightChoice{flex:1;padding:8px 5px;border:1px solid #eee8e4;border-radius:11px;background:#fff;font-size:15px}.fontWeightChoice.active{border-color:#c9c0ba;background:#fbf7f4}
+.fontCredit{display:none!important}
+.soundPowerRow{display:flex;align-items:center;justify-content:space-between;padding:4px 0 12px;font-size:18px}
+.effectRow{margin-top:8px!important;padding-left:0!important}
+.soundPanel{padding-left:56px!important}
+</style>
+
+<style>
+/* 몽글 v7.1 UI 개선 */
+.settingRow{min-height:54px!important;gap:12px!important;font-size:18px!important}.settingIcon{width:28px!important;height:28px!important}.settingIcon svg{width:22px!important;height:22px!important;stroke-width:1.8!important}.settingList{gap:0}.soundPanel{padding:4px 0 12px 40px!important}.soundPowerRow{padding:4px 0 10px;font-size:16px}.soundPowerRow .toggle{width:44px;height:25px}.soundChoices{gap:6px}.soundChoice{padding:9px 7px;border-radius:14px;font-size:14px}.soundChoice small{font-size:10px}.effectRow{font-size:16px!important}.fontPanel{padding-left:40px!important}.fontChoices{gap:5px!important}.fontChoice{padding:7px 10px!important;font-size:16px!important;border-radius:12px}.fontWeightChoices{gap:5px}.fontWeightChoice{padding:7px 4px;font-size:14px}.fontSliderWrap{grid-template-columns:28px 1fr 28px!important;font-size:12px!important}.fontSliderWrap input{height:22px}.movieSettingIcon svg{stroke-width:1.7!important}.movieListBrand{font-size:24px!important}.movieListHead{margin-bottom:18px!important}.menuPanel{width:104px!important;padding:5px!important;border-radius:16px!important}.menuPanel button{padding:7px 10px!important;font-size:16px!important;border-radius:12px!important}.topbtn svg{width:25px!important;height:25px!important}.topbtn{width:40px!important;height:40px!important}.homeChevron{font-size:14px!important;margin-left:31px!important;margin-top:0!important}.sticker svg{width:26px!important;height:26px!important}.sticker{margin-top:3px!important}.mood{min-height:82px!important;border-radius:18px!important;gap:2px!important}.moodIcon{width:40px!important;height:40px!important}.moodName{font-size:13px!important}.bigStar{font-family:Arial,sans-serif!important;font-size:27px!important;width:31px!important;height:31px!important;line-height:31px!important}.bigStar.full,.bigStar.off{color:transparent!important;background:none!important;position:relative}.bigStar.full:before,.bigStar.off:before{content:'★';font-size:29px;position:absolute;inset:0;line-height:31px;text-align:center;color:#d99b88}.bigStar.off:before{color:#ddd8d4}.bigStar.half:before{content:'★';font-size:29px;position:absolute;inset:0;line-height:31px;text-align:center;color:#d99b88;clip-path:inset(0 50% 0 0)}.bigStar.half:after{content:'★';font-size:29px;position:absolute;inset:0;line-height:31px;text-align:center;color:#ddd8d4;clip-path:inset(0 0 0 50%)}.movieStars{letter-spacing:1px}.personal{margin-top:10px!important}.personalQuestions{display:flex;flex-direction:column;gap:5px}.personalQuestions label{font-size:16px;color:#77706c;margin-top:8px}.personalQuestions .field{margin-bottom:5px}.personalQuestions .area{min-height:150px}.moviePersonalScreen .primary{margin-top:14px}.dayNum{font-size:17px!important;font-weight:400!important}.calendar .day{font-size:17px!important}.calyear{font-size:18px!important}.calmonth{font-size:30px!important}.posterFrame img,.searchTile img{content-visibility:auto}.searchTile img{background:#f1eeeb}.movieGrid img{content-visibility:auto}.lockOverlay{z-index:300}.lockCard{max-width:340px}.lockInput{font-size:26px}.lockSetupActions{display:flex;gap:8px;margin-top:10px}.lockSetupActions .primary{margin-top:0}.dateThemeInput{position:relative}
+.homeChevron{position:absolute;width:8px;height:8px;border-right:1.8px solid #555;border-bottom:1.8px solid #555;transform:rotate(45deg);margin-left:32px;margin-top:-4px;transition:transform .18s}.homeChevron.open{transform:rotate(225deg);margin-top:4px}.datePickerOverlay{}.datePickerCard{position:fixed;z-index:500;left:50%;top:50%;transform:translate(-50%,-50%);width:min(350px,calc(100vw - 34px));background:#fffdfb;border:1px solid #eee6e1;border-radius:24px;box-shadow:0 18px 50px #0002;padding:18px}.datePickerHead{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;text-align:center;font-size:19px}.datePickerHead button{font-size:28px}.dateWeek,.dateGrid{display:grid;grid-template-columns:repeat(7,1fr);text-align:center}.dateWeek{font-size:12px;color:#aaa;margin:15px 0 7px}.dateGrid{gap:5px}.dateCell{height:38px;border-radius:12px;font-size:15px}.dateCell.selected{background:#fff0e9;font-weight:700}.dateCancel{width:100%;margin-top:13px;padding:9px;border-radius:13px;background:#f5f0ec;font-size:14px}
+
+</style>
+
+<style id="mongul-user-fixes">
+/* 기존 기능 유지 + 요청사항 보정 */
+.homeChevron{
+  display:block!important;position:absolute!important;right:1px!important;bottom:7px!important;
+  width:9px!important;height:9px!important;border-right:2px solid #555!important;
+  border-bottom:2px solid #555!important;transform:rotate(45deg)!important;
+  margin:0!important;transition:transform .18s ease!important;pointer-events:none!important;
+}
+.homeChevron.open{transform:rotate(225deg)!important;bottom:3px!important;margin:0!important}
+
+/* 영화 기록의 장소/동행은 아이콘 + 연한 안내문 + 한 줄 입력 */
+.moviePersonalScreen .personalQuestions{gap:8px!important}
+.moviePersonalScreen .movieFieldLabel{
+  margin:4px 0 -4px!important;font-size:17px!important;color:#aaa39f!important;
+  font-weight:400!important;gap:7px!important;
+}
+.moviePersonalScreen .movieFieldLabel .fieldIcon{
+  width:23px!important;height:23px!important;background:transparent!important;
+  border-radius:0!important;color:#77706c!important;font-size:0!important;flex:none!important;
+}
+.moviePersonalScreen .movieFieldLabel .fieldIcon svg{
+  width:22px!important;height:22px!important;stroke:#77706c!important;
+  fill:none!important;stroke-width:1.8!important;
+}
+.moviePersonalScreen .personalQuestions .field{
+  margin-top:0!important;margin-bottom:4px!important;padding:5px 3px 7px!important;
+  font-size:18px!important;border-bottom:1px solid #e7e1dd!important;
+}
+.moviePersonalScreen .personalQuestions .movieFieldLabel + .field{
+  margin-top:0!important;
+}
+.moviePersonalScreen .personalQuestions .movieFieldLabel + .field::placeholder{
+  color:transparent!important;
+}
+.moviePersonalScreen .reviewLabel{margin-top:12px!important}
+
+/* 시청 횟수 +/− */
+.viewCountControl{display:flex;align-items:center;gap:6px}
+.viewCountControl .countButton{min-width:38px!important}
+.countAdjust{
+  width:30px;height:30px;border-radius:10px;background:#f7eee9;
+  border:1px solid #eadfd9;font-size:18px;line-height:1;
+}
+.detailCountControl{display:flex;align-items:center;gap:5px}
+.detailCountControl .countAdjust{width:28px;height:28px}
+.detailCountButton{min-width:42px}
+
+/* 날짜 팝업은 몽글 달력만, 더 작게 */
+.datePickerOverlay{background:#00000012!important}
+.datePickerCard{
+  width:min(292px,calc(100vw - 60px))!important;
+  padding:12px!important;border-radius:18px!important;
+}
+.datePickerHead{font-size:16px!important}
+.datePickerHead button{font-size:22px!important}
+.dateWeek{margin:8px 0 4px!important;font-size:11px!important}
+.dateGrid{gap:2px!important}
+.dateCell{height:31px!important;border-radius:9px!important;font-size:13px!important}
+.dateCell.selected{background:#fff0e9!important}
+
+/* 별표 화면의 좌측 상단 X를 항상 보이게 */
+#movieRateScreen .rateClose{
+  position:fixed!important;left:max(12px,calc((100vw - 430px)/2 + 12px))!important;
+  top:10px!important;z-index:80!important;width:44px!important;height:44px!important;
+  font-size:32px!important;line-height:44px!important;
+}
+</style>
+<script>
+(function(){
+'use strict';
+/* 메뉴 화살표 상태를 실제 메뉴 상태와 항상 동기화 */
+function syncHomeChevron(){
+  var menu=document.getElementById('menuPanel'), ch=document.getElementById('homeChevron');
+  if(menu&&ch) ch.classList.toggle('open',!menu.classList.contains('hidden'));
+}
+var oldHome=document.getElementById('homeBtn');
+if(oldHome){
+  oldHome.addEventListener('click',function(){requestAnimationFrame(syncHomeChevron);setTimeout(syncHomeChevron,0)});
+}
+var menuObs=document.getElementById('menuPanel');
+if(menuObs){
+  new MutationObserver(syncHomeChevron).observe(menuObs,{attributes:true,attributeFilter:['class']});
+}
+syncHomeChevron();
+
+/* 일기 저장 직후 상세/수정 화면으로 가지 않고 일기 목록으로 이동 */
+var saveDiaryBtn=document.getElementById('saveDiary');
+if(saveDiaryBtn){
+  saveDiaryBtn.addEventListener('click',function(){
+    setTimeout(function(){
+      var diaryMenu=document.getElementById('diaryMenu');
+      if(diaryMenu) diaryMenu.click();
+    },0);
+  });
+}
+
+/* 영화 기록의 장소/누구랑 아이콘을 SVG로 교체 */
+function setPersonalIcons(){
+  var pin=document.querySelector('.pinIcon'), person=document.querySelector('.personIcon');
+  if(pin) pin.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/></svg>';
+  if(person) person.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="3.2"/><path d="M5.5 20c.8-4 3-6 6.5-6s5.7 2 6.5 6"/></svg>';
+}
+setPersonalIcons();
+
+/* 시청 횟수에 감소 버튼도 추가 */
+function ensureViewControls(){
+  var row=document.querySelector('#moviePersonalScreen .viewCountRow');
+  var btn=document.getElementById('movieViewCount');
+  if(row&&btn&&!row.querySelector('.viewCountControl')){
+    var wrap=document.createElement('span'); wrap.className='viewCountControl';
+    btn.parentNode.insertBefore(wrap,btn); wrap.appendChild(btn);
+    var minus=document.createElement('button'); minus.className='countAdjust'; minus.type='button';
+    minus.textContent='−'; minus.setAttribute('aria-label','시청 횟수 줄이기');
+    wrap.insertBefore(minus,btn);
+    var plus=document.createElement('button'); plus.className='countAdjust'; plus.type='button';
+    plus.textContent='+'; plus.setAttribute('aria-label','시청 횟수 늘리기'); wrap.appendChild(plus);
+    minus.onclick=function(e){e.stopPropagation();var n=Math.max(1,(Number(btn.textContent)||1)-1);btn.textContent=String(n)};
+    plus.onclick=function(e){e.stopPropagation();var n=(Number(btn.textContent)||1)+1;btn.textContent=String(n)};
+    btn.onclick=function(e){e.stopPropagation()};
+  }
+}
+ensureViewControls();
+new MutationObserver(ensureViewControls).observe(document.getElementById('moviePersonalScreen'),{childList:true,subtree:true});
+
+/* 상세 화면의 시청 횟수도 감소/증가 가능 */
+var detailObserver=new MutationObserver(function(){
+  var b=document.getElementById('detailCountButton');
+  if(!b||b.dataset.controlReady)return;
+  b.dataset.controlReady='1';
+  var parent=b.parentElement, wrap=document.createElement('span'); wrap.className='detailCountControl';
+  parent.replaceChild(wrap,b); wrap.appendChild(b);
+  var minus=document.createElement('button');minus.className='countAdjust';minus.type='button';minus.textContent='−';
+  var plus=document.createElement('button');plus.className='countAdjust';plus.type='button';plus.textContent='+';
+  wrap.insertBefore(minus,b);wrap.appendChild(plus);
+  minus.onclick=function(e){
+    e.stopPropagation();var arr=JSON.parse(localStorage.getItem('mongul_movies')||'[]');
+    var title=(document.getElementById('movieDetail')||{}).querySelector?.('.detailMovieTitle')?.textContent||'';
+    var idx=arr.findIndex(function(x){return x.title===title});
+    if(idx<0)return;
+    arr[idx].viewCount=Math.max(1,(Number(arr[idx].viewCount)||1)-1);b.textContent=arr[idx].viewCount+'회';localStorage.setItem('mongul_movies',JSON.stringify(arr));
+  };
+  plus.onclick=function(e){
+    e.stopPropagation();var arr=JSON.parse(localStorage.getItem('mongul_movies')||'[]');
+    var title=(document.getElementById('movieDetail')||{}).querySelector?.('.detailMovieTitle')?.textContent||'';
+    var idx=arr.findIndex(function(x){return x.title===title});
+    if(idx<0)return;
+    arr[idx].viewCount=(Number(arr[idx].viewCount)||1)+1;b.textContent=arr[idx].viewCount+'회';localStorage.setItem('mongul_movies',JSON.stringify(arr));
+  };
+});
+detailObserver.observe(document.getElementById('movieDetail'),{childList:true,subtree:true});
+
+/* 효과음을 가볍고 짧은 연필 사각거림으로 교체 */
+var mongulEffectCtx=null;
+window.playEffect=function(){
+  if(localStorage.getItem('mongul_effect')!=='1')return;
+  try{
+    if(!mongulEffectCtx) mongulEffectCtx=new(window.AudioContext||window.webkitAudioContext)();
+    var ctx=mongulEffectCtx;
+    var start=function(){
+      var t=ctx.currentTime;
+      var buffer=ctx.createBuffer(1,Math.floor(ctx.sampleRate*.055),ctx.sampleRate);
+      var data=buffer.getChannelData(0);
+      for(var i=0;i<data.length;i++){
+        var env=1-i/data.length;
+        data[i]=(Math.random()*2-1)*env*env*.22;
+      }
+      var src=ctx.createBufferSource(), hp=ctx.createBiquadFilter(), gain=ctx.createGain();
+      hp.type='highpass';hp.frequency.value=1400;hp.Q.value=.45;
+      gain.gain.setValueAtTime(.0001,t);gain.gain.exponentialRampToValueAtTime(.12,t+.006);
+      gain.gain.exponentialRampToValueAtTime(.0001,t+.045);
+      src.buffer=buffer;src.connect(hp).connect(gain).connect(ctx.destination);src.start(t);
+      /* 아주 짧은 두 번의 마찰감 = 가벼운 연필 사각 소리 */
+      setTimeout(function(){
+        try{
+          var t2=ctx.currentTime, s2=ctx.createBufferSource(), g2=ctx.createGain();
+          s2.buffer=buffer;g2.gain.value=.045;s2.connect(hp).connect(g2).connect(ctx.destination);s2.start(t2);
+        }catch(e){}
+      },22);
+    };
+    if(ctx.state==='suspended')ctx.resume().then(start).catch(function(){});
+    else start();
+  }catch(e){}
+};
+
+/* 달력 팝업: 같은 날짜를 한 번 더 누르면 닫힘. 날짜 선택 후 자동으로 닫지 않음. */
+window.openThemedDatePicker=function(){
+  var input=document.getElementById('movieDateOnly');
+  var cur=input.dataset.date||localToday();
+  var d=new Date(cur+'T00:00:00'), y=d.getFullYear(), m=d.getMonth(), selected=cur;
+  var ov=document.createElement('div');ov.className='datePickerOverlay';
+  ov.innerHTML='<div class="datePickerCard"><div class="datePickerHead"><button class="dpPrev">‹</button><div class="dpTitle"></div><button class="dpNext">›</button></div><div class="dateWeek"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div><div class="dateGrid"></div></div>';
+  document.body.appendChild(ov);
+  function close(){ov.remove()}
+  function localKey(y,m,d){return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0')}
+  function localToday(){var q=new Date();return localKey(q.getFullYear(),q.getMonth(),q.getDate())}
+  function draw(){
+    var names=['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    ov.querySelector('.dpTitle').textContent=y+'년 '+names[m];
+    var first=new Date(y,m,1).getDay(),last=new Date(y,m+1,0).getDate(),h='';
+    for(var i=0;i<first;i++)h+='<span></span>';
+    for(var day=1;day<=last;day++){
+      var k=localKey(y,m,day);
+      h+='<button type="button" class="dateCell '+(k===selected?'selected':'')+'" data-date="'+k+'">'+day+'</button>';
+    }
+    ov.querySelector('.dateGrid').innerHTML=h;
+    ov.querySelectorAll('.dateCell').forEach(function(b){
+      b.onclick=function(e){
+        e.stopPropagation();
+        var k=b.dataset.date;
+        if(k===selected){ input.dataset.date=k;input.textContent=k;close();return; }
+        selected=k; input.dataset.date=k; input.textContent=k; draw();
+      };
+    });
+  }
+  ov.querySelector('.dpPrev').onclick=function(){m--;if(m<0){m=11;y--}draw()};
+  ov.querySelector('.dpNext').onclick=function(){m++;if(m>11){m=0;y++}draw()};
+  ov.addEventListener('click',function(e){if(e.target===ov)close()});
+  draw();
+};
+var dateBtn=document.getElementById('movieDateOnly');
+if(dateBtn)dateBtn.onclick=function(e){e.stopPropagation();window.openThemedDatePicker()};
+
+/* 홈 달력: 오른쪽→왼쪽 스와이프 = 일기 목록 */
+var cal=document.getElementById('calendarScreen'), sx=0,sy=0;
+if(cal){
+  cal.addEventListener('touchend',function(e){
+    if(!cal.classList.contains('active'))return;
+    var cdx=e.changedTouches[0].clientX-sx,cdy=e.changedTouches[0].clientY;
+    if(Math.abs(cdx)>70&&Math.abs(cdx)>Math.abs(cdy)) e.stopImmediatePropagation();
+  },{capture:true,passive:true});
+  cal.addEventListener('touchstart',function(e){
+    if(!cal.classList.contains('active'))return;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;
+  },{passive:true});
+  cal.addEventListener('touchend',function(e){
+    if(!cal.classList.contains('active'))return;
+    var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)&&dx<0){
+      var diaryMenu=document.getElementById('diaryMenu');
+      if(diaryMenu) diaryMenu.click();
+    }
+  },{passive:true});
+}
+
+/* 영화 기록 화면: 왼쪽→오른쪽 스와이프 = 홈 */
+function addHomeSwipe(id){
+  var el=document.getElementById(id),x=0,y=0;
+  if(!el)return;
+  el.addEventListener('touchstart',function(e){x=e.touches[0].clientX;y=e.touches[0].clientY},{passive:true});
+  el.addEventListener('touchend',function(e){
+    var dx=e.changedTouches[0].clientX-x,dy=e.changedTouches[0].clientY-y;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)&&dx>0&&el.classList.contains('active')){
+      var back=document.getElementById('movieListBack');
+      if(back) back.click();
+    }
+  },{passive:true});
+}
+['movieListScreen','movieSearchScreen','movieRateScreen','movieInfoScreen','moviePersonalScreen','movieDetailScreen','manualMovieScreen'].forEach(addHomeSwipe);
+})();
+</script>
+
+
+<style id="mongul-final-ui-fixes">
+/* 최종 요청 반영: 홈 메뉴 화살표 */
+#homeBtn{position:relative!important}
+#homeBtn .homeChevron{
+  position:absolute!important;
+  right:0px!important;
+  top:50%!important;
+  width:8px!important;
+  height:8px!important;
+  margin:0!important;
+  border-right:2px solid #222!important;
+  border-bottom:2px solid #222!important;
+  transform:translateY(-65%) rotate(45deg)!important;
+  opacity:1!important;
+  visibility:visible!important;
+  display:block!important;
+  pointer-events:none!important;
+}
+#homeBtn .homeChevron.open{
+  transform:translateY(-25%) rotate(225deg)!important;
+}
+
+/* 별점: 첫 번째 사진처럼 검은색 채움 + 연한 회색 외곽선 */
+#movieRateScreen .bigStars{gap:9px!important}
+#movieRateScreen .bigStar{
+  width:52px!important;
+  height:52px!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  background:transparent!important;
+  color:#000!important;
+  position:relative!important;
+}
+#movieRateScreen .bigStar .cuteStar{
+  width:52px!important;
+  height:52px!important;
+  display:block!important;
+}
+#movieRateScreen .bigStar path{
+  stroke-width:2.4!important;
+  stroke-linejoin:round!important;
+}
+#movieRateScreen .bigStar.full path,
+#movieRateScreen .bigStar.half path{
+  fill:#000!important;
+  stroke:#000!important;
+}
+#movieRateScreen .bigStar.off path{
+  fill:none!important;
+  stroke:#d3d3d3!important;
+}
+#movieRateScreen .bigStar.half path{
+  fill:url(#dummyHalf)!important;
+}
+
+/* 영화 기록 화면: 두 번째 사진처럼 날짜를 맨 위에 크게 표시 */
+#moviePersonalScreen .movieDateOnly{
+  order:-2!important;
+  align-self:center!important;
+  min-width:0!important;
+  width:auto!important;
+  padding:0!important;
+  margin:0 0 22px!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  font-size:20px!important;
+  line-height:1.35!important;
+  color:#222!important;
+  font-weight:400!important;
+  cursor:pointer!important;
+}
+#moviePersonalScreen .personal{margin-top:0!important}
+#moviePersonalScreen .personalQuestions{gap:6px!important}
+#moviePersonalScreen .movieFieldLabel{
+  display:flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  margin:3px 0 -3px!important;
+  color:#aaa!important;
+  font-size:17px!important;
+  font-weight:400!important;
+}
+#moviePersonalScreen .personalQuestions .field{
+  padding:5px 3px 8px!important;
+  border:0!important;
+  border-bottom:1px solid #e6e1de!important;
+  border-radius:0!important;
+  margin:0 0 4px!important;
+  font-size:18px!important;
+  background:transparent!important;
+}
+#moviePersonalScreen .personalQuestions .field::placeholder{
+  color:#c8c5c3!important;
+  opacity:1!important;
+}
+#moviePersonalScreen .movieFieldLabel .fieldIcon{
+  width:22px!important;height:22px!important;
+  background:transparent!important;border:0!important;
+  color:#222!important;
+}
+#moviePersonalScreen .movieFieldLabel .fieldIcon svg{
+  width:22px!important;height:22px!important;
+}
+
+/* 날짜 롤러 */
+.mongulWheelOverlay{
+  position:fixed;
+  inset:0;
+  z-index:900!important;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(255,253,251,.78);
+  backdrop-filter:blur(3px);
+  -webkit-backdrop-filter:blur(3px);
+}
+.mongulWheelCard{
+  width:min(330px,calc(100vw - 42px));
+  padding:20px 14px 18px;
+  border:1px solid #eee9e5;
+  border-radius:24px;
+  background:#fffdfb;
+  box-shadow:0 18px 50px rgba(0,0,0,.10);
+}
+.mongulWheelTitle{
+  text-align:center;
+  font-size:15px;
+  color:#aaa5a1;
+  margin-bottom:12px;
+}
+.mongulWheels{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.25fr .9fr .9fr;
+  gap:4px;
+  height:190px;
+  overflow:hidden;
+}
+.mongulWheels:before{
+  content:"";
+  position:absolute;
+  left:4px;right:4px;top:75px;height:40px;
+  border-top:1px solid #e9e3df;
+  border-bottom:1px solid #e9e3df;
+  border-radius:12px;
+  pointer-events:none;
+  z-index:3;
+}
+.mongulWheels:after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  z-index:2;
+  background:linear-gradient(
+    to bottom,
+    rgba(255,253,251,.96) 0%,
+    rgba(255,253,251,.55) 18%,
+    rgba(255,253,251,0) 32%,
+    rgba(255,253,251,0) 68%,
+    rgba(255,253,251,.55) 82%,
+    rgba(255,253,251,.96) 100%
+  );
+}
+.mongulWheel{
+  height:190px;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  scroll-snap-type:y mandatory;
+  scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;
+  text-align:center;
+  position:relative;
+  z-index:4;
+}
+.mongulWheel::-webkit-scrollbar{display:none}
+.mongulWheelItem{
+  height:38px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  scroll-snap-align:center;
+  font-size:19px;
+  color:#aaa6a2;
+  font-weight:400;
+}
+.mongulWheelItem.selected{
+  color:#222;
+  font-weight:600;
+}
+.mongulWheelSpacer{height:76px;flex:none}
+</style>
+
+<script>
+(function(){
+  /* 별점 렌더링은 기존 클릭/반점수 기능을 그대로 유지하면서 색상만 사진처럼 교체 */
+  var originalRenderRating = window.renderRating;
+  function repaintStars(){
+    var box=document.getElementById('rateBtns');
+    if(!box)return;
+    var stars=box.querySelectorAll('.bigStar');
+    stars.forEach(function(btn){
+      var path=btn.querySelector('path');
+      if(!path)return;
+      btn.style.color='#000';
+      if(btn.classList.contains('off')){
+        path.setAttribute('fill','none');
+        path.setAttribute('stroke','#d3d3d3');
+      }else if(btn.classList.contains('half')){
+        path.setAttribute('fill','#000');
+        path.setAttribute('stroke','#000');
+      }else{
+        path.setAttribute('fill','#000');
+        path.setAttribute('stroke','#000');
+      }
+    });
+  }
+  var rateBox=document.getElementById('rateBtns');
+  if(rateBox){
+    new MutationObserver(repaintStars).observe(rateBox,{childList:true,subtree:true});
+    setTimeout(repaintStars,0);
+  }
+
+  /* 날짜를 2026년 10월 5일 월요일 형식으로 표시 */
+  function localKey(y,m,d){
+    return y+'-'+String(m+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+  }
+  function todayKey(){
+    var d=new Date();
+    return localKey(d.getFullYear(),d.getMonth(),d.getDate());
+  }
+  function parseKey(k){
+    var p=String(k||todayKey()).split('-').map(Number);
+    var d=new Date(p[0],(p[1]||1)-1,p[2]||1);
+    return {y:d.getFullYear(),m:d.getMonth(),day:d.getDate()};
+  }
+  function dateText(k){
+    var d=parseKey(k);
+    var w=['일요일','월요일','화요일','수요일','목요일','금요일','토요일'];
+    return d.y+'년 '+(d.m+1)+'월 '+d.day+'일 '+w[new Date(d.y,d.m,d.day).getDay()];
+  }
+  function daysInMonth(y,m){return new Date(y,m+1,0).getDate()}
+
+  var dateBtn=document.getElementById('movieDateOnly');
+  if(!dateBtn)return;
+
+  function syncDateText(){
+    var k=dateBtn.dataset.date||todayKey();
+    dateBtn.dataset.date=k;
+    dateBtn.textContent=dateText(k);
+  }
+
+  /* 영화 기록 화면이 열릴 때마다 날짜 표시를 사진처럼 맞춤 */
+  var personal=document.getElementById('moviePersonalScreen');
+  if(personal){
+    new MutationObserver(function(){
+      if(personal.classList.contains('active'))setTimeout(syncDateText,0);
+    }).observe(personal,{attributes:true,attributeFilter:['class']});
+  }
+  syncDateText();
+
+  function openWheel(){
+    if(document.querySelector('.mongulWheelOverlay'))return;
+    var selected=parseKey(dateBtn.dataset.date||todayKey());
+    var ov=document.createElement('div');
+    ov.className='mongulWheelOverlay';
+    ov.innerHTML=
+      '<div class="mongulWheelCard">'+
+        '<div class="mongulWheelTitle">날짜 선택</div>'+
+        '<div class="mongulWheels">'+
+          '<div class="mongulWheel" data-kind="year"></div>'+
+          '<div class="mongulWheel" data-kind="month"></div>'+
+          '<div class="mongulWheel" data-kind="day"></div>'+
+        '</div>'+
+      '</div>';
+    document.body.appendChild(ov);
+
+    var yearWheel=ov.querySelector('[data-kind="year"]');
+    var monthWheel=ov.querySelector('[data-kind="month"]');
+    var dayWheel=ov.querySelector('[data-kind="day"]');
+    var years=[];
+    for(var y=1950;y<=2100;y++)years.push(y);
+
+    function renderWheel(wheel,items,current,suffix){
+      var h='<div class="mongulWheelSpacer"></div>';
+      items.forEach(function(v){
+        h+='<div class="mongulWheelItem'+(v===current?' selected':'')+'" data-value="'+v+'">'+v+suffix+'</div>';
+      });
+      h+='<div class="mongulWheelSpacer"></div>';
+      wheel.innerHTML=h;
+    }
+    function centerOn(wheel,index,instant){
+      var target=wheel.querySelectorAll('.mongulWheelItem')[index];
+      if(!target)return;
+      wheel.scrollTo({top:target.offsetTop-76,behavior:instant?'auto':'smooth'});
+    }
+    function rebuildDays(instant){
+      var max=daysInMonth(selected.y,selected.m);
+      if(selected.day>max)selected.day=max;
+      renderWheel(dayWheel,Array.from({length:max},function(_,i){return i+1}),selected.day,'일');
+      centerOn(dayWheel,selected.day-1,true);
+    }
+    function rebuildAll(instant){
+      renderWheel(yearWheel,years,selected.y,'년');
+      renderWheel(monthWheel,Array.from({length:12},function(_,i){return i+1}),selected.m+1,'월');
+      rebuildDays(true);
+      centerOn(yearWheel,selected.y-1950,true);
+      centerOn(monthWheel,selected.m,true);
+    }
+    function updateFromWheel(wheel,kind){
+      var items=wheel.querySelectorAll('.mongulWheelItem');
+      if(!items.length)return;
+      var center=wheel.scrollTop+95;
+      var best=0,bestDist=Infinity;
+      items.forEach(function(item,i){
+        var d=Math.abs((item.offsetTop+19)-center);
+        if(d<bestDist){bestDist=d;best=i}
+      });
+      var val=Number(items[best].dataset.value);
+      if(kind==='year')selected.y=val;
+      if(kind==='month')selected.m=val-1;
+      if(kind==='day')selected.day=val;
+      if(kind!=='day')rebuildDays(true);
+      dateBtn.dataset.date=localKey(selected.y,selected.m,selected.day);
+      syncDateText();
+      items.forEach(function(item,i){item.classList.toggle('selected',i===best)});
+    }
+    function bindWheel(wheel,kind){
+      var timer;
+      wheel.addEventListener('scroll',function(){
+        clearTimeout(timer);
+        timer=setTimeout(function(){updateFromWheel(wheel,kind)},100);
+      },{passive:true});
+      wheel.addEventListener('click',function(e){
+        var item=e.target.closest('.mongulWheelItem');
+        if(!item)return;
+        var items=[].slice.call(wheel.querySelectorAll('.mongulWheelItem'));
+        var idx=items.indexOf(item);
+        centerOn(wheel,idx,false);
+      });
+    }
+    bindWheel(yearWheel,'year');
+    bindWheel(monthWheel,'month');
+    bindWheel(dayWheel,'day');
+    rebuildAll(true);
+
+    /* 날짜 표시를 다시 누르면 닫힘 */
+    ov.addEventListener('click',function(e){
+      if(e.target===ov)ov.remove();
+    });
+  }
+
+  window.openMongulDateWheel=openWheel;
+
+  dateBtn.onclick=function(e){
+    e.stopPropagation();
+    var existing=document.querySelector('.mongulWheelOverlay');
+    if(existing){existing.remove();return}
+    syncDateText();
+    openWheel();
+  };
+
+  /* 롤러에서 선택한 값이 실제 저장 날짜와 동일하도록 보정 */
+  var saveMovieButton=document.getElementById('saveMovie');
+  if(saveMovieButton)saveMovieButton.addEventListener('click',function(){
+    syncDateText();
+  },true);
+})();
+</script>
+
+<style id="mongul-stability-fixes">
+#app .homeChevron,#app .fieldIcon,#app .settingIcon,#app .lockIcon,
+#app .back,#app .movieListBack,#app .settingsBack,#app .rateClose,
+#app .plus,#app .prevBtn,#app .nextBtn,#app .searchX{font-size:inherit!important}
+#app .fieldIcon{font-size:0!important}
+#app .fieldIcon svg{width:22px!important;height:22px!important}
+#app .lockIcon{font-size:42px!important}
+#app .homeChevron{font-size:0!important}
+#movieRateScreen .bigStar:before,#movieRateScreen .bigStar:after{content:none!important;display:none!important}
+#movieRateScreen .bigStar{width:52px!important;height:52px!important;font-size:0!important;overflow:visible!important}
+#movieRateScreen .bigStar .cuteStar{width:52px!important;height:52px!important}
+#movieRateScreen .bigStar.full path{fill:#000!important;stroke:#000!important}
+#movieRateScreen .bigStar.half path{fill:url(#starHalf)!important;stroke:#000!important}
+#movieRateScreen .bigStar.off path{fill:none!important;stroke:#d2d2d2!important}
+#moviePersonalScreen .personal{display:flex!important;flex-direction:column!important;margin-top:0!important}
+#moviePersonalScreen .movieDateOnly{order:-10!important;align-self:center!important;width:auto!important;min-width:0!important;margin:0 0 20px!important;padding:0!important;border:0!important;background:transparent!important;border-radius:0!important;font-size:20px!important;line-height:1.35!important;font-weight:400!important;color:#222!important;pointer-events:none!important;cursor:default!important}
+#moviePersonalScreen .personalQuestions{order:0!important}
+#moviePersonalScreen #saveMovie{order:1!important}
+#moviePersonalScreen #movieReview{display:block!important;width:100%!important;min-height:145px!important;height:145px!important;padding:10px 3px!important;resize:none!important;pointer-events:auto!important;user-select:text!important;-webkit-user-select:text!important;touch-action:auto!important;position:relative!important;z-index:5!important;opacity:1!important;color:#292625!important}
+#moviePersonalScreen #movieReview::placeholder{color:#c8c5c3!important;opacity:1!important}
+#moviePersonalScreen .reviewLabel{pointer-events:none!important}
+#app.font-weight-thin *{font-weight:400!important;text-shadow:none!important}
+#app.font-weight-normal *{font-weight:600!important;text-shadow:0 0 .16px currentColor!important}
+#app.font-weight-bold *{font-weight:700!important;text-shadow:none!important}
+#app.font-weight-thin svg *,#app.font-weight-normal svg *,#app.font-weight-bold svg *{text-shadow:none!important}
+.screen{touch-action:pan-y}
+</style>
+<script>
+(function(){
+'use strict';
+function ensureHalfGradient(){
+ if(document.getElementById('starHalf'))return;
+ var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');svg.setAttribute('width','0');svg.setAttribute('height','0');svg.style.position='absolute';
+ svg.innerHTML='<defs><linearGradient id="starHalf" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="50%" stop-color="#000"/><stop offset="50%" stop-color="#d2d2d2"/></linearGradient></defs>';
+ document.body.appendChild(svg);
+}
+ensureHalfGradient();
+function numericDateText(){var el=document.getElementById('movieDateOnly');if(!el)return;var k=el.dataset.date;if(!k)return;var p=k.split('-');if(p.length===3)el.textContent=p[0]+'.'+p[1]+'.'+p[2];}
+numericDateText();
+var personal=document.getElementById('moviePersonalScreen');if(personal)new MutationObserver(function(){if(personal.classList.contains('active'))setTimeout(numericDateText,0)}).observe(personal,{attributes:true,attributeFilter:['class']});
+var dateEl=document.getElementById('movieDateOnly');if(dateEl){dateEl.onclick=null;dateEl.addEventListener('click',function(e){e.preventDefault();e.stopImmediatePropagation()},true)}
+var review=document.getElementById('movieReview');if(review){review.removeAttribute('readonly');review.removeAttribute('disabled');review.setAttribute('autocomplete','off');review.style.pointerEvents='auto';review.style.userSelect='text';review.style.webkitUserSelect='text'}
+function applyWeightVisual(){var v=localStorage.getItem('mongul_font_weight')||'500';var app=document.getElementById('app');if(!app)return;app.classList.remove('font-weight-thin','font-weight-normal','font-weight-bold');app.classList.add(v==='400'?'font-weight-thin':v==='700'?'font-weight-bold':'font-weight-normal')}
+applyWeightVisual();
+document.querySelectorAll('.fontWeightChoice').forEach(function(b){b.addEventListener('click',function(){setTimeout(applyWeightVisual,20)})});
+document.querySelectorAll('.fontChoice,#fontSizeSlider').forEach(function(b){b.addEventListener('click',function(){setTimeout(applyWeightVisual,30)});b.addEventListener('input',function(){setTimeout(applyWeightVisual,30)})});
+var backMap={diaryListScreen:'[data-calendar]',moodScreen:'[data-calendar]',writeScreen:'[data-calendar]',diaryDetailScreen:'[data-calendar]',settingsScreen:'#settingsBack',movieListScreen:'#movieListBack',movieSearchScreen:'[data-movies]',movieRateScreen:'#rateClose',movieInfoScreen:'#infoPrev',moviePersonalScreen:'#personalPrev',movieDetailScreen:'#movieDetailScreen > .back',manualMovieScreen:'#manualBack'};
+var sx=0,sy=0;
+document.addEventListener('touchstart',function(e){if(e.touches.length!==1)return;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true,capture:true});
+document.addEventListener('touchend',function(e){if(e.changedTouches.length!==1)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)<70||Math.abs(dx)<=Math.abs(dy))return;var active=document.querySelector('.screen.active');if(!active||active.id==='calendarScreen')return;var sel=backMap[active.id],btn=sel?active.querySelector(sel):null;if(!btn&&sel)btn=document.querySelector(sel);if(btn){e.preventDefault();e.stopImmediatePropagation();btn.click()}},{passive:false,capture:true});
+})();
+</script>
+
+
+<style id="mongul-request-final-fixes">
+/* 요청사항: 설정은 일반적인 톱니바퀴 아이콘 */
+#settingsBtn svg{width:25px!important;height:25px!important;stroke:#222!important;stroke-width:1.55!important;fill:none!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+#settingsBtn svg path{fill:none!important}
+#tmdbPanel{display:block}
+#tmdbPanel.hidden{display:none}
+#tmdbKeyInput:focus{border-color:#c9c0ba!important}
+#tmdbSaveBtn{margin-top:2px}
+
+
+/* 별점 별을 대폭 축소 */
+#movieRateScreen .bigStars{gap:4px!important}
+#movieRateScreen .bigStar,
+#movieRateScreen .bigStar .cuteStar{width:30px!important;height:30px!important}
+#movieRateScreen .bigStar{min-width:30px!important;min-height:30px!important}
+#movieRateScreen .bigStar path{stroke-width:1.9!important}
+
+/* 영화 기록 날짜: 최상단 + 왼쪽 정렬 + 숫자 표시 */
+#moviePersonalScreen .movieDateOnly{
+  align-self:stretch!important;
+  width:100%!important;
+  text-align:left!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  margin:0 0 20px!important;
+  padding:0 2px!important;
+  font-size:20px!important;
+}
+
+/* 검색 화면 오른쪽 위 X 제거 */
+#movieSearchScreen .searchX{display:none!important}
+</style>
+<script>
+(function(){
+  'use strict';
+
+  /* 날짜: 기존에 만들어 둔 년/월/일 롤러를 실제 터치로 다시 열 수 있게 연결 */
+  var dateEl=document.getElementById('movieDateOnly');
+  if(dateEl){
+    dateEl.style.pointerEvents='auto';
+    dateEl.onclick=function(e){
+      e.preventDefault();
+      e.stopPropagation();
+      var existing=document.querySelector('.mongulWheelOverlay');
+      if(existing){existing.remove();return;}
+      if(typeof window.openMongulDateWheel==='function') window.openMongulDateWheel();
+    };
+  }
+
+  /* 홈 달력: 기존의 반대 방향 스와이프를 막고,
+     오른쪽으로 넘길 때만 일기 목록으로 이동 */
+  var cal=document.getElementById('calendarScreen');
+  var touchX=0,touchY=0;
+  if(cal){
+    cal.addEventListener('touchstart',function(e){
+      if(!cal.classList.contains('active')||!e.touches.length)return;
+      touchX=e.touches[0].clientX; touchY=e.touches[0].clientY;
+    },{passive:true,capture:true});
+    cal.addEventListener('touchend',function(e){
+      if(!cal.classList.contains('active')||!e.changedTouches.length)return;
+      var dx=e.changedTouches[0].clientX-touchX;
+      var dy=e.changedTouches[0].clientY-touchY;
+      if(Math.abs(dx)<70||Math.abs(dx)<=Math.abs(dy))return;
+      /* 기존 왼쪽→오른쪽/오른쪽→왼쪽 처리와 충돌하지 않도록 모두 차단 */
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      if(dx>0){
+        var menu=document.getElementById('diaryMenu');
+        if(menu)menu.click();
+      }
+    },{passive:false,capture:true});
+  }
+})();
+</script>
+
+
+<style id="mongul-v11-polish">
+/* 작은 화면 메뉴, 여백, 둥근 아이콘과 컨트롤 */
+#tmdbRow,#tmdbPanel{display:none!important}
+#menuPanel{width:60px!important;left:18px!important;padding:5px 3px!important;border-radius:17px!important}
+#menuPanel button{width:100%!important;padding:8px 2px!important;text-align:center!important;font-size:14px!important;line-height:1.2!important;border-radius:13px!important;white-space:nowrap!important}
+#homeBtn{position:relative!important;gap:0!important;padding-right:8px!important}
+#homeBtn .homeChevron{right:-3px!important;left:auto!important;margin:0!important;width:7px!important;height:7px!important}
+#addBtn{bottom:27px!important}
+#app button,#app input,#app textarea,.toggle,.soundChoice,.fontChoice,.countButton{border-radius:16px}
+#app .topbtn,#app .back,#app .movieListBack,#app .settingsBack,#app .rateClose{border-radius:50%!important}
+#app .settingIcon{border-radius:50%!important;background:#faf2ed!important}
+#app .fieldIcon{border-radius:50%!important}
+#moviePersonalScreen .personalQuestions{display:grid!important;grid-template-columns:auto minmax(0,1fr)!important;align-items:center!important;column-gap:10px!important;row-gap:8px!important}
+#moviePersonalScreen .personalQuestions .movieFieldLabel{grid-column:1!important;margin:0!important;white-space:nowrap!important;gap:5px!important}
+#moviePersonalScreen #moviePlace,#moviePersonalScreen #movieWho{grid-column:2!important;min-width:0!important;width:100%!important;margin:0!important;padding:8px 2px!important;border-bottom:1px solid #e7e1dd!important;font-size:17px!important}
+#moviePersonalScreen .viewCountRow,#moviePersonalScreen .reviewLabel,#moviePersonalScreen #movieReview{grid-column:1/-1!important}
+#moviePersonalScreen .personalQuestions .reviewLabel{margin-top:8px!important}
+#moviePersonalScreen #movieReview{grid-column:1/-1!important}
+.movieTile img,.searchTile img,.posterFrame img{content-visibility:visible!important;opacity:1;transition:none!important}
+.movieTile img,.searchTile img{background:#f1eeeb;object-fit:cover}
+.lockCard .lockBack{display:block;width:100%;margin:0 0 18px;text-align:left;font-size:28px;padding:6px 8px;border-radius:14px;background:#f7f2ee}
+.lockPad{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;width:min(270px,100%);margin:18px auto 10px}
+.lockPad button{height:52px;border-radius:17px;background:#f7f2ee;font-size:23px}
+.lockDots{font-size:24px;letter-spacing:9px;min-height:30px;color:#8d7e76}
+.lockSetupActions{display:flex;gap:8px;margin-top:12px}
+.lockSetupActions button{flex:1}
+</style>
+<script id="mongul-v11-interaction-fixes">
+(function(){
+'use strict';
+const $=id=>document.getElementById(id);
+/* Remove the TMDB controls from settings. Existing saved key remains available to search. */
+/* TMDB settings controls are visually hidden; existing saved key and search logic remain intact. */
+/* Force poster requests to start as soon as tiles are inserted. */
+function boostPosters(root){(root||document).querySelectorAll('.movieTile img,.searchTile img,.posterFrame img').forEach(img=>{img.loading='eager';img.decoding='async';try{img.fetchPriority='high'}catch(e){};if(img.dataset.poster && (!img.src || img.src===''))img.src=img.dataset.poster})}
+new MutationObserver(()=>boostPosters(document)).observe($('movieList'),{childList:true,subtree:true});
+new MutationObserver(()=>boostPosters(document)).observe($('movieResults'),{childList:true,subtree:true});
+boostPosters(document);
+/* Make font choice apply immediately, then refresh when the selected webfont finishes loading. */
+function instantFont(){const b=document.querySelector('.fontChoice.active');if(!b)return;const f=b.dataset.font;const map={mini:'NanumMiNiSonGeurSsi',sin:'NanumSinHonBuBu',ddobak:'NanumDdoBagDdoBag',world:'NanumSeGyeJeogInHanGeur',hyejun:'NanumHyeJunCe'};if(document.fonts&&map[f]){document.fonts.load('16px "'+map[f]+'"').then(()=>{document.body.classList.remove('font-mini','font-sin','font-ddobak','font-world','font-hyejun');document.body.classList.add('font-'+f)}).catch(()=>{})}}
+document.querySelectorAll('.fontChoice').forEach(b=>{b.addEventListener('click',instantFont);b.addEventListener('touchend',instantFont,{passive:true})});
+/* Numeric on-screen keypad for setup and a second confirmation step, with Back to Settings. */
+function buildLockScreen(){const ov=$('lockOverlay');ov.innerHTML='<div class="lockCard"><button type="button" class="lockBack" id="lockBackBtn">‹ 설정으로 돌아가기</button><div class="lockIcon">⌑</div><div id="lockTitleText" class="lockTitle">화면 잠금 설정</div><div id="lockHintText" class="lockHint">새 비밀번호 4자리를 입력해 주세요.</div><div id="lockDots" class="lockDots">○ ○ ○ ○</div><div id="lockPad" class="lockPad"><button type="button" data-key="1">1</button><button type="button" data-key="2">2</button><button type="button" data-key="3">3</button><button type="button" data-key="4">4</button><button type="button" data-key="5">5</button><button type="button" data-key="6">6</button><button type="button" data-key="7">7</button><button type="button" data-key="8">8</button><button type="button" data-key="9">9</button><button type="button" data-key="clear">지우기</button><button type="button" data-key="0">0</button><button type="button" data-key="back">⌫</button></div><input id="unlockPin" class="lockInput" inputmode="none" type="password" maxlength="4" readonly aria-label="비밀번호 숫자"><div id="unlockError" class="lockError"></div><div class="lockSetupActions"><button type="button" id="unlockBtn" class="primary">다음</button></div></div>';
+let stage='first',firstPin='',pin='';
+function update(){ $('unlockPin').value=pin; $('lockDots').textContent=Array.from({length:4},(_,i)=>i<pin.length?'●':'○').join(' '); }
+function back(){ov.classList.add('hidden');pin='';firstPin='';stage='first';$('lockPin')?.remove();const settings=$('settingsScreen');if(settings)settings.classList.add('active');}
+$('lockBackBtn').onclick=back;
+$('lockPad').onclick=e=>{const b=e.target.closest('button[data-key]');if(!b)return;const k=b.dataset.key;if(k==='clear')pin='';else if(k==='back')pin=pin.slice(0,-1);else if(pin.length<4)pin+=k;update();if(pin.length===4){setTimeout(()=>{if(stage==='unlock'){if(pin===localStorage.getItem('mongul_pin')){ov.classList.add('hidden');pin='';update()}else{$('unlockError').textContent='비밀번호가 맞지 않아요.';pin='';update()}}},90)}};
+$('unlockBtn').onclick=()=>{if(pin.length!==4){$('unlockError').textContent='숫자 4자리를 눌러 주세요.';return}if(stage==='first'){firstPin=pin;pin='';stage='confirm';$('lockTitleText').textContent='비밀번호 확인';$('lockHintText').textContent='같은 숫자 4자리를 한 번 더 눌러 주세요.';$('unlockBtn').textContent='잠금 설정';$('unlockError').textContent='';update();return}if(stage==='confirm'){if(pin!==firstPin){pin='';firstPin='';stage='first';$('lockTitleText').textContent='화면 잠금 설정';$('lockHintText').textContent='숫자가 달라요. 처음부터 다시 입력해 주세요.';$('unlockBtn').textContent='다음';update();return}localStorage.setItem('mongul_pin',firstPin);localStorage.setItem('mongul_lock','1');ov.classList.add('hidden');pin='';update();return}if(stage==='unlock'){if(pin===localStorage.getItem('mongul_pin')){ov.classList.add('hidden');pin='';update()}else{$('unlockError').textContent='비밀번호가 맞지 않아요.';pin='';update()}}};
+window.mongulOpenLockSetup=function(){stage='first';pin='';firstPin='';$('lockBackBtn').style.display='block';ov.classList.remove('hidden');$('lockTitleText').textContent='화면 잠금 설정';$('lockHintText').textContent='새 비밀번호 4자리를 눌러 주세요.';$('unlockBtn').textContent='다음';$('unlockError').textContent='';update()};
+window.mongulOpenUnlock=function(){stage='unlock';pin='';firstPin='';$('lockBackBtn').style.display='none';ov.classList.remove('hidden');$('lockTitleText').textContent='몽글 잠금';$('lockHintText').textContent='비밀번호 4자리를 눌러 주세요.';$('unlockBtn').textContent='열기';$('unlockError').textContent='';update()};
+}
+buildLockScreen();
+$('lockRow').onclick=()=>{if(localStorage.getItem('mongul_lock')==='1'&&localStorage.getItem('mongul_pin')){if(confirm('화면 잠금을 해제할까요?')){localStorage.removeItem('mongul_pin');localStorage.setItem('mongul_lock','0')}}else window.mongulOpenLockSetup()};
+if(localStorage.getItem('mongul_lock')==='1'&&localStorage.getItem('mongul_pin'))window.mongulOpenUnlock();
+/* Wake the audio engine during the first touch so later effect sounds start with minimal delay. */
+document.addEventListener('touchstart',function(){try{if(localStorage.getItem('mongul_effect')==='1'){if(!window.__mongulWarmAudio)window.__mongulWarmAudio=new(window.AudioContext||window.webkitAudioContext)();if(window.__mongulWarmAudio.state==='suspended')window.__mongulWarmAudio.resume()}}catch(e){}},{passive:true,once:true});
+/* Gentle scratch sound directly from the original click gesture. */
+document.addEventListener('click',function(e){if(!e.target.closest('#effectToggle'))return;setTimeout(()=>{if(localStorage.getItem('mongul_effect')==='1'&&window.playEffect)window.playEffect()},0)},true);
+})();
+</script>
+
+
+<script id="mongul-home-transfer">
+(function(){
+  const $=id=>document.getElementById(id);
+  const safeRead=k=>{try{const v=JSON.parse(localStorage.getItem(k)||'[]');return Array.isArray(v)?v:[]}catch(e){return[]}};
+  function mergeRecords(current,incoming,keyFn){const map=new Map();current.forEach(x=>map.set(keyFn(x),x));incoming.forEach(x=>{const k=keyFn(x);if(!map.has(k))map.set(k,x);else if(k.startsWith('diary:'))map.set(k,x)});return [...map.values()]}
+  function exportData(){
+    const payload={app:'몽글',formatVersion:1,exportedAt:new Date().toISOString(),diaries:safeRead('mongul_diaries'),movies:safeRead('mongul_movies'),preferences:{font:localStorage.getItem('mongul_font'),fontSlider:localStorage.getItem('mongul_font_slider'),fontWeight:localStorage.getItem('mongul_font_weight'),tmdbKey:localStorage.getItem('mongul_tmdb_key')}};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='mongul-records-backup.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+    alert('기록 파일을 저장했어요. 다른 몽글에서 “기록 가져오기”를 눌러 이 파일을 선택해 주세요.');
+  }
+  function importData(file){const reader=new FileReader();reader.onload=()=>{try{const d=JSON.parse(String(reader.result||''));if(!d||!Array.isArray(d.diaries)||!Array.isArray(d.movies))throw new Error('invalid');
+      const diaries=mergeRecords(safeRead('mongul_diaries'),d.diaries,x=>'diary:'+String(x.date||JSON.stringify(x)));
+      const movies=mergeRecords(safeRead('mongul_movies'),d.movies,x=>'movie:'+String(x.createdAt||'')+':'+String(x.date||'')+':'+String(x.title||''));
+      localStorage.setItem('mongul_diaries',JSON.stringify(diaries));localStorage.setItem('mongul_movies',JSON.stringify(movies));
+      const pref=d.preferences||{};if(pref.font)localStorage.setItem('mongul_font',pref.font);if(pref.fontSlider)localStorage.setItem('mongul_font_slider',pref.fontSlider);if(pref.fontWeight)localStorage.setItem('mongul_font_weight',pref.fontWeight);if(pref.tmdbKey)localStorage.setItem('mongul_tmdb_key',pref.tmdbKey);
+      alert('기록을 가져왔어요! 몽글을 새로 열면 일기와 영화 기록이 보여요.');location.reload();
+    }catch(e){alert('몽글 백업 파일이 아니거나 파일을 읽지 못했어요. 내보낸 JSON 파일을 선택해 주세요.')} };
+    reader.onerror=()=>alert('파일을 읽지 못했어요. 다시 시도해 주세요.');reader.readAsText(file);
+  }
+  if($('transferRow'))$('transferRow').onclick=()=>$('transferPanel').classList.toggle('hidden');
+  if($('exportRecords'))$('exportRecords').onclick=exportData;
+  if($('importRecords'))$('importRecords').onclick=()=>$('importFile').click();
+  if($('importFile'))$('importFile').onchange=e=>{const file=e.target.files&&e.target.files[0];if(file)importData(file);e.target.value=''};
+  const fontMap={mini:'NanumMiNiSonGeurSsi',sin:'NanumSinHonBuBu',ddobak:'NanumDdoBagDdoBag',world:'NanumSeGyeJeogInHanGeur',hyejun:'NanumHyeJunCe'};
+  function applyHomeFont(){const f=localStorage.getItem('mongul_font')||'mini';const family=fontMap[f]||fontMap.mini;document.body.style.fontFamily='"'+family+'", Gaegu, "Apple SD Gothic Neo", sans-serif';if(document.fonts)document.fonts.load('16px "'+family+'"').then(()=>{document.body.style.fontFamily='"'+family+'", Gaegu, "Apple SD Gothic Neo", sans-serif'}).catch(()=>{});}
+  document.addEventListener('click',e=>{if(e.target.closest('.fontChoice'))setTimeout(applyHomeFont,0)});
+  document.addEventListener('change',e=>{if(e.target.closest('.fontChoice'))setTimeout(applyHomeFont,0)});
+  const observer=new MutationObserver(applyHomeFont);observer.observe(document.body,{attributes:true,attributeFilter:['class']});
+  window.addEventListener('pageshow',applyHomeFont);document.addEventListener('visibilitychange',()=>{if(!document.hidden)applyHomeFont()});applyHomeFont();
+})();
+</script>
+
+<script id="mongul-auto-update-registration">
+/* 몽글 자동 업데이트: 앱 파일만 갱신하며 일기/영화 localStorage는 건드리지 않음 */
+(function(){
+  if (!('serviceWorker' in navigator) || !/^https?:$/.test(location.protocol)) return;
+  window.addEventListener('load', function(){
+    navigator.serviceWorker.register('./sw.js', {updateViaCache:'none'}).then(function(reg){
+      reg.update().catch(function(){});
+      document.addEventListener('visibilitychange', function(){
+        if (document.visibilityState === 'visible') reg.update().catch(function(){});
+      });
+      reg.addEventListener('updatefound', function(){
+        var worker = reg.installing;
+        if (!worker) return;
+        worker.addEventListener('statechange', function(){
+          if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+            /* 새 버전은 다음 진입/새로고침 때 적용 */
+            try { reg.waiting && reg.waiting.postMessage({type:'SKIP_WAITING'}); } catch(e) {}
+          }
+        });
+      });
+    }).catch(function(e){ console.warn('몽글 업데이트 확인 실패', e); });
+  });
+})();
+</script>
+
+</body></html>
